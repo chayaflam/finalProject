@@ -1,0 +1,40 @@
+CREATE SCHEMA finalProjectDb ;
+
+
+CREATE TABLE `finalprojectdb`.`userpassword` (
+  `userId` INT NOT NULL,
+  `userPassword` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE INDEX `userId_UNIQUE` (`userId` ASC));
+
+  CREATE TABLE `finalprojectdb`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NULL,
+  `statusUser` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC));
+
+
+
+CREATE TABLE `finalprojectdb`.`child` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `childId` INT NOT NULL,
+  `childName` VARCHAR(45) NOT NULL,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  PRIMARY KEY (`childId`),
+  UNIQUE INDEX `childId_UNIQUE` (`childId` ASC));
+
+
+CREATE TABLE `finalprojectdb`.`teacher` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `teacherId` INT NOT NULL,
+  `teacherName` VARCHAR(45) NOT NULL,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  PRIMARY KEY (`teacherId`),
+  UNIQUE INDEX `teacherId_UNIQUE` (`teacherId` ASC));
+  
+  ALTER TABLE `finalprojectdb`.`userpassword` 
+ADD COLUMN `id` INT NOT NULL AUTO_INCREMENT AFTER `userPassword`,
+ADD UNIQUE INDEX `id_UNIQUE` (`id` ASC);
+;
+
