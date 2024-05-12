@@ -13,6 +13,7 @@ export default function Login() {
 
   useEffect(() => {
       if (user) {
+        console.log("aaaaa")
           fetch(`${URL}/user/${user.username}`, {
               method: 'GET'
           }).then(response => response.json())

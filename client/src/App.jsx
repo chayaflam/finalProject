@@ -3,6 +3,8 @@ import React from 'react';
 import './App.css'
 import { BrowserRouter as  Router, Route, Routes } from 'react-router-dom';
 import Login from './components/login/Login'
+import Parent from './components/parent/Parent';
+import Teacher from './components/teacher/Teacher';
 
 
 export default function App() {
