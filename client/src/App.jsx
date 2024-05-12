@@ -15,8 +15,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/parent" element={<Parent />} />
-          <Route path="/teacher" element={<Teacher />} />
+          <Route path="/parent/:username" element={<Parent />} />
+          <Route path="/teacher/:username" element={<Teacher />} />
         </Routes>
       </div>
     </Router>
