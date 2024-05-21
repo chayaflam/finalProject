@@ -4,4 +4,4 @@ export default function Baby() {
     return (<>
         <h1>baby!!!</h1>
     </>)
-}
+};
