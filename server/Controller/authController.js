@@ -7,8 +7,9 @@ export class AuthController {
         try {
             const passwordService = new UserPasswordService();
             const result = await passwordService.login(req.body);
+            console.log("resultLogin "+result)
             if (result)
-                return res.status(200).json(result);
+                return res.status(200).json({result:result.resultItem,token:result.token});
             const err = { statusCode: 401, message: "Login failed" }
             return res.status(401).json(logErrors(err, req, res, next))
         }
@@ -18,6 +19,7 @@ export class AuthController {
             err.message = ex;
             next(err)
         }
+        
 
     }
 
