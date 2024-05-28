@@ -1,7 +1,8 @@
 import { socket } from '../../socket.js';
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from "../../main";
-//const URL = 'http://localhost:8080';
+
+
 
 
 
@@ -12,6 +13,7 @@ function ChatRoom() {
     const [messages, setMessages] = useState(
         JSON.parse(localStorage.getItem('messages')) || []
     );
+    
     // socket.open(err => {
     //     if (err)
     //         console.log("errr")
@@ -30,11 +32,11 @@ function ChatRoom() {
     // });
 
     let counter = 0;
-     socket = io({
-        autoConnect: false
-      });
+    // socket = io({
+    //     autoConnect: false
+    //   });
       
-      socket.connect();
+    //   socket.connect();
     // const babySocket = socket.socket("/Jinny");
     // // useEffect(() => {
     //     localStorage.setItem('messages', JSON.stringify(messages));
@@ -48,7 +50,7 @@ function ChatRoom() {
         if (message) {
             const clientOffset = `${socket.id}-${counter++}`;
             console.log( `${socket.id}-${counter++}`)
-            socket.emit('chat message', message, clientOffset);
+            // socket.emit('chat message', message, clientOffset);
             setMessages(messages => [...messages, message]);
         }
 
