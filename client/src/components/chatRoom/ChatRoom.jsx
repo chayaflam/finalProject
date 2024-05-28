@@ -50,7 +50,7 @@ function ChatRoom() {
         if (message) {
             const clientOffset = `${socket.id}-${counter++}`;
             console.log( `${socket.id}-${counter++}`)
-            // socket.emit('chat message', message, clientOffset);
+            socket.emit('chat message', message, clientOffset);
             setMessages(messages => [...messages, message]);
         }
 
