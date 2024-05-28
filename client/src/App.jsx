@@ -7,13 +7,12 @@ import Login from './components/login/Login'
 import Parent from './components/parent/Parent';
 import Teacher from './components/teacher/Teacher';
 import Baby from './components/baby/Baby';
-import ChatRoom from './components/chatRoom/ChatRoom';
+
 //import UserProfile from './components/userProfile/UserProfile';
 //import firebase from 'firebase/app';
 //import 'firebase/auth';
-import { io } from "socket.io-client";
 
-const socket = io('http://localhost:8080');
+// const socket = io('http://localhost:8080');
 
 
 // const firebaseConfig = {
@@ -35,8 +34,6 @@ export default function App() {
         <Route path='teacher/:username' element={<Teacher />} >
           <Route path="baby" element={<Baby />} />
         </Route>
-
-        <Route path="/chat" component={<ChatRoom/>} />
       {/* <Route path="/profile" component={UserProfile} /> */}
       </Routes>
 

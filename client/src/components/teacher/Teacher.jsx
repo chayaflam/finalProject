@@ -7,7 +7,7 @@ export default function Teacher() {
       return (
             <>
                   <h1>Teacher!!!!!</h1>
-                  <NavLink to="./baby" > <img src="../img/Jinny Weasly.png" /></NavLink>
+                  <NavLink to="./baby" > <img src="../../img/Jinny Weasly.png" /></NavLink>
                   <Outlet />
             </>
       )
