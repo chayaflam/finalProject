@@ -27,7 +27,7 @@ export default function App() {
     <><Router>
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Baby />} />
         <Route path="/login" element={<Login />} />
         <Route path="/parent/:username" element={<Parent />} />
         <Route path='teacher/:username' element={<Teacher />} />
