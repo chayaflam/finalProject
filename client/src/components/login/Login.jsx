@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { UserContext } from "../../main";
-
+import {getFetchRequest,postFetchRequest} from "../fetch";
 const URL = "http://localhost:8080"
 
 export default function Login() {
@@ -13,34 +13,43 @@ export default function Login() {
 
     useEffect(() => {
         if (user) {
-            fetch(`${URL}/user/${user.username}`, {
-                method: 'GET',
-                headers: { Authorization: user.token }
-            }).then(response => response.json())
-                .then(json => {
-                    if (json) navigate(`/users/${user.username}`)
-                })
-                .catch(error => alert("Error:", error))
+            try{
+               getFetchRequest(user,URL,'user',[user.username])
+                if (json) navigate(`/users/${user.username}`)
+            }catch{
+                alert("Unauthorized user")
+            }
         }
-        else navigate('/login');
+        navigate('/login')
+        //     fetch(`${URL}/user/${user.username}`, {
+        //         method: 'GET',
+        //         headers: { Authorization: user.token }
+        //     }).then(response => response.json())
+        //         .then(json => {
+        //             if (json) navigate(`/users/${user.username}`)
+        //         })
+        //         .catch(error => alert("Error:", error))
+        // }
+        // else navigate('/login');
     }, [])
 
     const loginHandleSubmit = (data) => {
         let status;
-        fetch(`${URL}/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        }).then((response) => {
-            status = response.status;
-            return response.json();
-        }).then(dataFromServer => {
-            if (status != 200) throw dataFromServer.error;
-            setUser(prev => ({ ...prev, username: data.username, id: dataFromServer.id }));
-            console.log(dataFromServer)
-            localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.id, status: dataFromServer.statusUser, token: dataFromServer.token }))
-            navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
-        }).catch(error => { alert("Error:" + error) })
+       const dataFromServer= postFetchRequest(URL,'/auth/login',[data])
+        // fetch(`${URL}/auth/login`, {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(data)
+        // }).then((response) => {
+        //     status = response.status;
+        //     return response.json();
+        // }).then(dataFromServer => {
+        //     if (status != 200) throw dataFromServer.error;
+        //     setUser(prev => ({ ...prev, username: data.username, id: dataFromServer.id }));
+        //     console.log(dataFromServer)
+        //     localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.id, status: dataFromServer.statusUser, token: dataFromServer.token }))
+        //     navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
+        // }).catch(error => { alert("Error:" + error) })
     }
 
     return (
