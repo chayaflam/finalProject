@@ -5,7 +5,7 @@ const chatMessageRouter = express.Router();
 const chatMessageController = new ChatMessageController()
 
 console.log("hyjufydiulrjyguy😋🎁🛹")
-chatMessageRouter.get("/", chatMessageController.hhh)
+chatMessageRouter.get("/", chatMessageController.test1)
 
 export {
     chatMessageRouter

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { UserContext } from "../../main";
-import {getFetchRequest,postFetchRequest} from "../fetch";
+import { getFetchRequest, postFetchRequest } from "../fetch";
 const URL = "http://localhost:8080"
 
 export default function Login() {
@@ -13,43 +13,25 @@ export default function Login() {
 
     useEffect(() => {
         if (user) {
-            try{
-               getFetchRequest(user,URL,'user',[user.username])
+            try {
+                getFetchRequest(user, URL, 'user', [user.username])
                 if (json) navigate(`/users/${user.username}`)
-            }catch{
+            } catch {
                 alert("Unauthorized user")
             }
         }
         navigate('/login')
-        //     fetch(`${URL}/user/${user.username}`, {
-        //         method: 'GET',
-        //         headers: { Authorization: user.token }
-        //     }).then(response => response.json())
-        //         .then(json => {
-        //             if (json) navigate(`/users/${user.username}`)
-        //         })
-        //         .catch(error => alert("Error:", error))
-        // }
-        // else navigate('/login');
     }, [])
 
-    const loginHandleSubmit = (data) => {
+    async function loginHandleSubmit(data) {
         let status;
-       const dataFromServer= postFetchRequest(URL,'/auth/login',[data])
-        // fetch(`${URL}/auth/login`, {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(data)
-        // }).then((response) => {
-        //     status = response.status;
-        //     return response.json();
-        // }).then(dataFromServer => {
-        //     if (status != 200) throw dataFromServer.error;
-        //     setUser(prev => ({ ...prev, username: data.username, id: dataFromServer.id }));
-        //     console.log(dataFromServer)
-        //     localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.id, status: dataFromServer.statusUser, token: dataFromServer.token }))
-        //     navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
-        // }).catch(error => { alert("Error:" + error) })
+        await postFetchRequest(URL, 'auth/login', [data])
+            .then(res => {
+                setUser(prev => ({ ...prev, username: data.username, id: res.result.id }));
+                localStorage.setItem('user', JSON.stringify({ username: data.username, id: res.result.id, status: res.result.statusUser, token: res.token }))
+                navigate(`/${res.result.statusUser}/${data.username}`);
+            }
+            ).catch(error => { alert(error) })
     }
 
     return (

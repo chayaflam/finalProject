@@ -44,3 +44,13 @@ ADD COLUMN `name` VARCHAR(45) NOT NULL AFTER `statusUser`,
 ADD COLUMN `email` VARCHAR(45) NULL AFTER `name`,
 ADD COLUMN `phone` VARCHAR(45) NOT NULL AFTER `email`;
 
+CREATE TABLE `finalprojectdb`.`messages` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `babyId` INT NOT NULL,
+  `message` VARCHAR(45) NOT NULL,
+  `date` DATETIME NULL,
+  PRIMARY KEY (`id`));
+
+
+ALTER TABLE `finalprojectdb`.`child` 
+ADD COLUMN `teacherId` INT NOT NULL AFTER `childName`;

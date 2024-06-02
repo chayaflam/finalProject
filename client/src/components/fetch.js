@@ -1,7 +1,7 @@
 
-export default async function getFetchRequest(user, URL, tablename, params) {
+async function getFetchRequest(user, URL, tablename, params) {
     try {
-        fetch(`${URL}/${tablename}/${params[0]}`, {
+        await fetch(`${URL}/${tablename}/${params[0]}`, {
             method: 'GET',
             headers: { Authorization: user.token }
         }).then(response => response.json())
@@ -11,16 +11,22 @@ export default async function getFetchRequest(user, URL, tablename, params) {
     }
 }
 
-export default async function postFetchRequest(URL, tablename, params) {
+async function postFetchRequest(URL, tablename, params) {
+    let dataFromServer;
+    let status;
     try {
-        fetch(`${URL}/${tablename}`, {
+        await fetch(`${URL}/${tablename}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(params[0])
         }).then((response) => {
+            status = response.status;
             return response.json();
-        }) .catch(fetchError => fetchError)
-    } catch (userError) {
-        return userError
-    }
+        }).then(data => {
+            if (status != 200) throw data.error;
+            dataFromServer = data;
+        }).catch(error => error)
+        return dataFromServer;
+    } catch (err) { err }
 }
+export { postFetchRequest, getFetchRequest }

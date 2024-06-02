@@ -3,10 +3,12 @@ function getQuery(table) {
     return `SELECT * FROM finalProjectDb.${table}`;
 }
 
-function getByUsernameQuery(table) {
-    return `SELECT * FROM finalProjectDb.${table} WHERE username = ? `;
+function getByParamQuery(table,param) {
+    return `SELECT * FROM finalProjectDb.${table} WHERE ${param} = ? `;
 }
 
+
+
 export {
-    getQuery,getByUsernameQuery
+    getQuery,getByParamQuery
 }
