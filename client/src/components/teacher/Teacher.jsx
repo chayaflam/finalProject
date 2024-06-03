@@ -16,8 +16,11 @@ export default function Teacher() {
       useEffect(() => {
             if (user) {
                   try {
-                        const result = getFetchRequest(user, URL, 'child', [user.id])
-                        setChildrenList(children=>[result]);
+                        getFetchRequest(user, URL, 'child', [user.id])
+                              .then(data => {
+                                    setChildrenList([data]);
+                              })
+
                   } catch {
                         alert("kkkk")
                   }
@@ -29,8 +32,11 @@ export default function Teacher() {
 
                   <h1>Teacher</h1>
                   <div >
-                        {childrenList.map(ele=>{
-                             <NavLink to={`./baby/${ele.childName}`}>< img height={100} width={100} src={ele.childName.replace(" ", "")} /></NavLink> 
+                        {childrenList.length && childrenList.map(ele => {
+                              let img = ele.childName.replace(" ", "")
+                              return <NavLink to={`./baby/${ele.childName.replace(" ", "")}`}>
+                                    < img height={100} width={100} src={img} />
+                              </NavLink>
                         })}
                         {/* <NavLink to='./baby/HarryPotter'>< img height={100} width={100} src={HarryPotter} /></NavLink>
                         <NavLink ><img height={100} width={100} src={GinnyWeasley} /></NavLink>

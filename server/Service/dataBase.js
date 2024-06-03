@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 
 async function executeQuery(query, params) {
-
+    console.log("❤🚗💕👍✌🙌")
     let results;
     const connection = await mysql.createConnection({
         host: 'localhost',
@@ -20,6 +20,7 @@ async function executeQuery(query, params) {
     finally {
         connection.end();
     }
+   
     return results;
 }
 

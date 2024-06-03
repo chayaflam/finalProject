@@ -1,11 +1,14 @@
 
 async function getFetchRequest(user, URL, tablename, params) {
+    let dataFromServer;
     try {
         await fetch(`${URL}/${tablename}/${params[0]}`, {
             method: 'GET',
             headers: { Authorization: user.token }
-        }).then(response => response.json())
-            .catch(fetchError => fetchError)
+        }).then(response => response.json()).then(data => {
+            dataFromServer = data
+        })            .catch(fetchError => fetchError)
+        return dataFromServer;
     } catch (userError) {
         return userError
     }

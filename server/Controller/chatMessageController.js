@@ -5,8 +5,9 @@ export class ChatMessageController {
 
   async test(data) {
     try {
-      //service
-      result = await executeQuery(`INSERT INTO finalprojectdb.messages (babyId, message, date) VALUES (?, ?, ?)`, [12, "diaper", "2008-11-11 13:23:44"]);
+      let date= new Date()
+      result = await executeQuery(`INSERT INTO finalprojectdb.messages (babyId, message, date) VALUES (?, ?, ?)`, [12, data, date]);
+      console.log(result)
       return result;
     } catch (err) {
       throw err;
