@@ -2,6 +2,15 @@ html {
     font-size: 14px;
 }
 
+
+Button{
+    height: 60px;
+    width: 120px;
+    color: rgb(32,93,118);
+    border-color:rgb(32,93,118) ;
+    
+}
+
 body {
     background: var(--green-100),;
     font-family: var(--font-family);
