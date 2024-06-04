@@ -8,7 +8,6 @@ export class ChildrenService {
         console.log(data)
         const queryChildren = getByParamQuery("child", "teacherId");
         const result = await executeQuery(queryChildren, [data]);
-        console.log(result)
-        return result[0] ? result[0] : null;
+        return result[0] ? result : null;
     }
 }

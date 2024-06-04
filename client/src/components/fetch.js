@@ -7,6 +7,7 @@ async function getFetchRequest(user, URL, tablename, params) {
             headers: { Authorization: user.token }
         }).then(response => response.json()).then(data => {
             dataFromServer = data
+            
         })            .catch(fetchError => fetchError)
         return dataFromServer;
     } catch (userError) {

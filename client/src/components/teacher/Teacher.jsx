@@ -1,49 +1,56 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import { UserContext } from "../../main";
+import React, { useEffect, useState, useContext } from "react"
+import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import { UserContext, BabyContext } from "../../main";
 import { getFetchRequest } from "../fetch";
-import HarryPotter from '../../img/HarryPotter.png'
-import GinnyWeasley from '../../img/GinnyWeasley.png'
-import RonWeasley from '../../img/RonWeasley.png'
-import ChatRoom from "../chatRoom/ChatRoom";
-
+import './Teacher.css'
+import { Button } from "primereact/button";
+import { Image } from 'primereact/image';
+import { useNavigate } from 'react-router-dom';
+const URL = "http://localhost:8080"
 
 export default function Teacher() {
-      const URL = "http://localhost:8080"
-
-      const [user, setUser] = useContext(UserContext)
+      const imgUrl = '../../../public/img'
+      // const images = require.context('../../public/img', true);
+      const navigate = useNavigate();
+      const [user, setUser] = useContext(UserContext);
+      const [baby, setBaby] = useContext(BabyContext)
       const [childrenList, setChildrenList] = useState([]);
       useEffect(() => {
             if (user) {
                   try {
                         getFetchRequest(user, URL, 'child', [user.id])
                               .then(data => {
-                                    setChildrenList([data]);
+                                    setChildrenList(data);
                               })
-
                   } catch {
-                        alert("kkkk")
+                        alert("error")
                   }
             }
       }, [])
 
+      const logout = () => {
+            localStorage.clear()
+            setUser(null)
+            navigate('/')
+      }
+
       return (
             <>
-
                   <h1>Teacher</h1>
+                  <Button onClick={() => logout()}>Log out</Button>
                   <div >
-                        {childrenList.length && childrenList.map(ele => {
-                              let img = ele.childName.replace(" ", "")
-                              return <NavLink to={`./baby/${ele.childName.replace(" ", "")}`}>
-                                    < img height={100} width={100} src={img} />
+                        {childrenList.length && childrenList.map((baby, key) => {
+                              // let img = ele.childName.replace(" ", "")
+
+
+                              return <NavLink key={key} onClick={setBaby(baby)} to={`./baby/${baby.childName}`}  >
+                                    <Image src={`${imgUrl}/${baby.childName}.png `} />
                               </NavLink>
                         })}
-                        {/* <NavLink to='./baby/HarryPotter'>< img height={100} width={100} src={HarryPotter} /></NavLink>
-                        <NavLink ><img height={100} width={100} src={GinnyWeasley} /></NavLink>
-                        <NavLink ><img height={100} width={100} src={RonWeasley} /></NavLink> */}
-                        <Outlet />
+
 
                   </div>
+                  <Outlet />
             </>
       )
 }

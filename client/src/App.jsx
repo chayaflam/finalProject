@@ -1,7 +1,5 @@
-
 import React from 'react';
 import './App.css'
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/login/Login'
 import Parent from './components/parent/Parent';
@@ -9,9 +7,8 @@ import Teacher from './components/teacher/Teacher';
 import Baby from './components/baby/Baby';
 
 export default function App() {
-  return (
+    return (
     <><Router>
-
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
@@ -21,7 +18,6 @@ export default function App() {
           <Route path="baby/:babyname" element={<Baby />} />
         </Route>
       </Routes>
-
     </Router>
     </>
   )
