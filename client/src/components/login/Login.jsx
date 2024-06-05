@@ -14,7 +14,7 @@ const URL = "http://localhost:8080"
 
 export default function Login() {
     const [user, setUser] = useContext(UserContext)
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(true);
     const { register, handleSubmit } = useForm()
     const navigate = useNavigate();
 

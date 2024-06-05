@@ -1,17 +1,50 @@
 import { socket } from '../../socket.js';
 import React, { useState, useEffect, useContext } from 'react';
+
 import { BabyContext, UserContext } from "../../main";
 import diaper from '../../../public/img/diaper.png'
 import sleep from '../../../public/img/sleep.png'
+import food from '../../../public/img/food.png'
 import './ChatRoom.css'
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Slider from '@mui/material/Slider';
+import MuiInput from '@mui/material/Input';
+import VolumeUp from '@mui/icons-material/VolumeUp';
+
+const Input = styled(MuiInput)`
+  width: 42px;
+`;
 
 function ChatRoom() {
+
     const [user, setUser] = useContext(UserContext)
     const [messageText, setMessageText] = useState('');
     const [messages, setMessages] = useState([]);
     const [baby, setBaby] = useContext(BabyContext)
     const enable = user.status == "teacher" ? true : false;
     let counter = 0;
+
+
+    const [value, setValue] = React.useState(0);
+
+    const handleSliderChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const handleInputChange = (event) => {
+        setValue(event.target.value === '' ? 0 : Number(event.target.value));
+    };
+
+    const handleBlur = () => {
+        if (value < 0) {
+            setValue(0);
+        } else if (value > 250) {
+            setValue(250);
+        }
+    };
 
     // Send a message
     const sendMessage = (message) => {
@@ -40,6 +73,41 @@ function ChatRoom() {
                 <h1>The chat room components will go here</h1>
                 {enable && <button onClick={() => sendMessage({ babyId: baby.childId, msg: "diaper" })}><img src={diaper} /></button>}
                 {enable && <button onClick={() => sendMessage({ babyId: baby.childId, msg: "sleep" })}><img src={sleep} /></button>}
+                {enable && <button onClick={() => sendMessage({ babyId: baby.childId, msg: "sleep" })}><img src={sleep} /></button>}
+                <Box sx={{ width: 250 }}>
+                    <Typography id="input-slider" gutterBottom>
+                        Volume
+                    </Typography>
+                    <Grid container spacing={2} alignItems="center">
+                        <Grid item>
+                            <img src={food}  />
+                        </Grid>
+                        <Grid item xs>
+                            <Slider
+                                value={typeof value === 'number' ? value : 0}
+                                onChange={handleSliderChange}
+                                max={250}
+                                aria-labelledby="input-slider"
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Input
+                                value={value}
+                                size="small"
+                                onChange={handleInputChange}
+                                onBlur={handleBlur}
+                                inputProps={{
+                                    step: 20,
+                                    min: 0,
+                                    max: 250,
+                                    type: 'number',
+                                    'aria-labelledby': 'input-slider',
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                </Box>
+
                 {messages.length && <ul>{messages.map(element => {
                     return (<li>
                         {element}

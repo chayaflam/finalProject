@@ -5,17 +5,19 @@ import Login from './components/login/Login'
 import Parent from './components/parent/Parent';
 import Teacher from './components/teacher/Teacher';
 import Baby from './components/baby/Baby';
+import Header from './components/header/Header';
 
 export default function App() {
-    return (
+  return (
     <><Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/parent/:username" element={<Parent />} />
-        <Route path='teacher/:username' element={<Teacher />} />
-        <Route path='teacher/:username' element={<Teacher />} >
-          <Route path="baby/:babyname" element={<Baby />} />
+        <Route path="/" element={<Header />} >
+          <Route path="/login" element={<Login />} />
+          <Route path="/parent/:username" element={<Parent />} />
+          <Route path='teacher/:username' element={<Teacher />} />
+          <Route path='teacher/:username' element={<Teacher />} >
+            <Route path="baby/:babyname" element={<Baby />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

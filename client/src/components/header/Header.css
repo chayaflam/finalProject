@@ -1,0 +1,32 @@
+body {
+    font-family:'Gloria Hallelujah', cursive;
+}
+nav {
+    background-color: rgb(250, 248, 218); /* Light background color */
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Adjust the z-index if needed */
+}
+
+nav a {
+    text-decoration: none;
+    color: rgb(32, 93, 118); /* Darker text color */
+    padding: 10px 20px;
+    display: inline-block;
+    text-align: left;
+    font-size: 18px; /* Slightly larger text for a clean look */
+    border-radius: 6px;
+    background-color: rgb(255, 193, 34); /* Button background color */
+    margin: 5px;
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+nav a:hover {
+    background-color: rgb(98, 212, 211); /* Hover effect with a different color */
+    transform: scale(1.1); /* Slight scaling effect */
+}
+
+nav a:active {
+    background-color: rgb(255, 160, 158); /* Active link color */
+}
