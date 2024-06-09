@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react"
 import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
 import { UserContext, BabyContext } from "../../main";
 import { getFetchRequest } from "../fetch";
+import { socket } from "../../socket";
 import './Teacher.css'
 import { Button } from "primereact/button";
 import { Image } from 'primereact/image';
@@ -15,6 +16,7 @@ export default function Teacher() {
       const [user, setUser] = useContext(UserContext);
       const [baby, setBaby] = useContext(BabyContext)
       const [childrenList, setChildrenList] = useState([]);
+      const [room, setRoom] = useState('');
       useEffect(() => {
             if (user) {
                   try {
@@ -27,6 +29,14 @@ export default function Teacher() {
                   }
             }
       }, [])
+
+      const joinRoom = (childName) => {
+            if (room !== '' && user.username !== '') {
+                  username=user.username;
+                  socket.emit('join_room', { username, room });
+            }
+            navigate(`./baby/${childName}`);
+      };
 
       const logout = () => {
             localStorage.clear()
@@ -43,9 +53,9 @@ export default function Teacher() {
                               // let img = ele.childName.replace(" ", "")
 
 
-                              return <NavLink key={key} onClick={setBaby(baby)} to={`./baby/${baby.childName}`}  >
+                              return <Button key={key} onClick={() => { setRoom(baby.childName); joinRoom(baby.childName); }}  >
                                     <Image src={`${imgUrl}/${baby.childName}.png `} />
-                              </NavLink>
+                              </Button>
                         })}
 
 

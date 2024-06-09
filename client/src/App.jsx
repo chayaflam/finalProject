@@ -14,7 +14,6 @@ export default function App() {
         <Route path="/" element={<Header />} >
           <Route path="/login" element={<Login />} />
           <Route path="/parent/:username" element={<Parent />} />
-          <Route path='teacher/:username' element={<Teacher />} />
           <Route path='teacher/:username' element={<Teacher />} >
             <Route path="baby/:babyname" element={<Baby />} />
           </Route>
@@ -24,3 +23,5 @@ export default function App() {
     </>
   )
 }
+
+//https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/
