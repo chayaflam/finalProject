@@ -2,11 +2,15 @@ body {
     font-family:'Gloria Hallelujah', cursive;
 }
 nav {
-    background-color: rgb(250, 248, 218); /* Light background color */
+    background-color: rgb(255, 255, 247); /* Light background color */
     padding: 15px;
     position: sticky;
     top: 0;
     z-index: 1000; /* Adjust the z-index if needed */
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: flex-start;; 
+    height: 60px; /* Set the height of the navigation bar */
 }
 
 nav a {
@@ -29,4 +33,19 @@ nav a:hover {
 
 nav a:active {
     background-color: rgb(255, 160, 158); /* Active link color */
+}
+
+img{
+    width: 100px;
+    height: auto
+}
+
+h2{
+    color: rgb(32, 93, 118);
+    text-align: center;
+}
+h3{
+    color:rgb(32, 93, 118);
+    text-decoration: dashed;
+    text-align: center;
 }
