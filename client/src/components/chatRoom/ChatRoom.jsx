@@ -1,7 +1,8 @@
 import { socket } from '../../socket.js';
 import React, { useState, useEffect, useContext } from 'react';
 
-import { BabyContext, UserContext } from "../../main";
+import {  UserContext } from "../../main";
+
 import diaper from '../../../public/img/diaper.png'
 import sleep from '../../../public/img/sleep.png'
 import food from '../../../public/img/food.png'
@@ -21,14 +22,13 @@ const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-function ChatRoom() {
+function ChatRoom(props) {
     const [user, setUser] = useContext(UserContext)
-    const [baby, setBaby] = useContext(BabyContext)
     return (
         <div >
             <div>
                 <ChatMessage socket={socket} />
-                <SendMessage socket={socket} username={user.username} room={baby.childName} />
+                <SendMessage socket={socket} username={user.username} room={props.baby.childId} />
             </div>
         </div>
     );

@@ -1,26 +1,25 @@
 import React, { useEffect, useState, useContext } from "react"
-import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
-import { UserContext, BabyContext } from "../../main";
+import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../../main";
 import { getFetchRequest } from "../fetch";
 import { socket } from "../../socket";
 import './Teacher.css'
 import { Button } from "primereact/button";
 import { Image } from 'primereact/image';
-import { useNavigate } from 'react-router-dom';
 const URL = "http://localhost:8080"
+const imgUrl = '../../../public/img'
 
 export default function Teacher() {
-      const imgUrl = '../../../public/img'
-      // const images = require.context('../../public/img', true);
+
       const navigate = useNavigate();
-      const [user, setUser] = useContext(UserContext);
-      const [baby, setBaby] = useContext(BabyContext)
+      const [user, setUser] = useContext(UserContext)
       const [childrenList, setChildrenList] = useState([]);
       const [room, setRoom] = useState('');
+
       useEffect(() => {
             if (user) {
                   try {
-                        getFetchRequest(user, URL, 'child', [user.id])
+                        getFetchRequest(user, URL, 'child/teacher', [user.id])
                               .then(data => {
                                     setChildrenList(data);
                               })
@@ -30,12 +29,12 @@ export default function Teacher() {
             }
       }, [])
 
-      const joinRoom = (childName) => {
+      const joinRoom = (baby) => {
             if (room !== '' && user.username !== '') {
-                  username=user.username;
+                  username = user.username;
                   socket.emit('join_room', { username, room });
             }
-            navigate(`./baby/${childName}`);
+            navigate(`./baby/${baby.childName}`, { state: { baby: baby } });
       };
 
       const logout = () => {
@@ -51,14 +50,13 @@ export default function Teacher() {
                   <div >
                         {childrenList.length && childrenList.map((baby, key) => {
                               // let img = ele.childName.replace(" ", "")
+                              return <Button key={key} onClick={() => {
 
-
-                              return <Button key={key} onClick={() => { setRoom(baby.childName); joinRoom(baby.childName); }}  >
+                                    setRoom(baby.childId); joinRoom(baby);
+                              }}  >
                                     <Image src={`${imgUrl}/${baby.childName}.png `} />
                               </Button>
                         })}
-
-
                   </div>
                   <Outlet />
             </>

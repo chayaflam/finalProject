@@ -28,14 +28,15 @@ io.on("connection", (socket) => {
 
 
     socket.on('join_room', (data) => {
+        console.log("🎈🌺🌻🌼🌷🥀")
         const { username, room } = data; // Data sent from client when join_room event emitted
         socket.join(room);
-        let __createdtime__ = Date.now(); // Current timestamp
+        let createdtime= Date.now(); // Current timestamp
         // Send message to all users currently in the room, apart from the user that just joined
         socket.to(room).emit('receive_message', {
             message: `${username} has joined the chat room`,
             username: CHAT_BOT,
-            __createdtime__,
+            createdtime,
         });
         chatRoom = room;
         allUsers.push({ id: socket.id, username, room });
@@ -44,20 +45,18 @@ io.on("connection", (socket) => {
         socket.emit('chatroom_users', chatRoomUsers);
     });
     socket.on('send_message', async (data) => {
+        console.log("🎈🌺🌻🌼🌷🥀")
         try {
-        const { message, username, room, __createdtime__ } = data;
-        io.in(room).emit('receive_message', data); // Send to all users in room, including sender
-        const queryChildren = postQuery("messages");
-        result = await executeQuery(queryChildren, [username, room, message, __createdtime__]);
-        }catch (ex) {
+            const { message, username, room, createdtime } = data;
+            io.in(room).emit('receive_message', data); // Send to all users in room, including sender
+            const queryChildren = postQuery("messages");
+            result = await executeQuery(queryChildren, [username, room, message, createdtime]);
+            //emit????
+        } catch (ex) {
             const err = {}
             err.statusCode = 500;
             err.message = ex;
         }
-
-        // harperSaveMessage(message, username, room, __createdtime__) // Save message in db
-        //     .then((response) => console.log(response))
-        //     .catch((err) => console.log(err));
     });
 
 

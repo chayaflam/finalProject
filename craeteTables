@@ -54,3 +54,16 @@ CREATE TABLE `finalprojectdb`.`messages` (
 
 ALTER TABLE `finalprojectdb`.`child` 
 ADD COLUMN `teacherId` INT NOT NULL AFTER `childName`;
+
+
+ALTER TABLE `finalprojectdb`.`messages` 
+ADD COLUMN `senderName` VARCHAR(45) NOT NULL AFTER `id`,
+ADD UNIQUE INDEX `senderName_UNIQUE` (`senderName` ASC);
+;
+ALTER TABLE `finalprojectdb`.`messages` 
+DROP INDEX `senderName_UNIQUE` ;
+;
+
+
+ALTER TABLE `finalprojectdb`.`child` 
+ADD COLUMN `parentId` INT NOT NULL AFTER `teacherId`;

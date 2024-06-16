@@ -8,7 +8,7 @@ async function getFetchRequest(user, URL, tablename, params) {
         }).then(response => response.json()).then(data => {
             dataFromServer = data
             
-        })            .catch(fetchError => fetchError)
+        }).catch(fetchError => fetchError)
         return dataFromServer;
     } catch (userError) {
         return userError

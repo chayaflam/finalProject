@@ -8,7 +8,7 @@ function getByParamQuery(table,param) {
 }
 
 function postQuery(table) {
-    return `INSERT INTO finalprojectdb.${table} (babyId, message, date) VALUES (?,?,?) `;
+    return `INSERT INTO finalprojectdb.${table} (senderName, babyId, message, date) VALUES (?,?,?,?) `;
 }
 
 export {
