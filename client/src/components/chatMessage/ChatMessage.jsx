@@ -31,7 +31,7 @@ function ChatMessage({ socket }) {
   return (
     <div >
       {messagesRecieved.map((msg, i) => (
-        <div  key={i}>
+        <div key={i}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span >{msg.username}</span>
             <span >

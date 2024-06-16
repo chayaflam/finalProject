@@ -24,6 +24,7 @@ const Input = styled(MuiInput)`
 
 function ChatRoom(props) {
     const [user, setUser] = useContext(UserContext)
+
     return (
         <div >
             <div>
@@ -33,7 +34,7 @@ function ChatRoom(props) {
         </div>
     );
 
-
+ 
 
 
 

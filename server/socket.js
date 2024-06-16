@@ -16,7 +16,8 @@ export const io = new Server(httpServer, {
 
 //---------------------------------------------------------------------------------------------------------------------
 let chatRoom = ''; // E.g. javascript, node,...
-let allUsers = []; // All users in current chat room
+let allUsers = [];
+let chatRoomUsers=[] ;// All users in current chat room
 const CHAT_BOT = 'ChatBot';
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -39,15 +40,17 @@ io.on("connection", (socket) => {
             createdtime,
         });
         chatRoom = room;
+        console.log(room)
         allUsers.push({ id: socket.id, username, room });
         chatRoomUsers = allUsers.filter((user) => user.room === room);
         socket.to(room).emit('chatroom_users', chatRoomUsers);
         socket.emit('chatroom_users', chatRoomUsers);
     });
     socket.on('send_message', async (data) => {
-        console.log("🎈🌺🌻🌼🌷🥀")
+
         try {
             const { message, username, room, createdtime } = data;
+            console.log(room+"💜💙💚💛🧡")
             io.in(room).emit('receive_message', data); // Send to all users in room, including sender
             const queryChildren = postQuery("messages");
             result = await executeQuery(queryChildren, [username, room, message, createdtime]);
@@ -62,25 +65,25 @@ io.on("connection", (socket) => {
 
     //-----------------------------------------------------------------------------------------------------------------
 
-    socket.on('chat message', async (data, clientOffset, callback) => {
-        try {
-            console.log("🎍🎍🎄" + Object.values(data))
-            let date = new Date()
-            const queryChildren = postQuery("messages");
-            result = await executeQuery(queryChildren, [data.babyId, data.msg, date]);
+//     socket.on('chat message', async (data, clientOffset, callback) => {
+//         try {
+//             console.log("🎍🎍🎄" + Object.values(data))
+//             let date = new Date()
+//             const queryChildren = postQuery("messages");
+//             result = await executeQuery(queryChildren, [data.babyId, data.msg, date]);
 
-        } catch (ex) {
-            const err = {}
-            err.statusCode = 500;
-            err.message = ex;
-        }
-        console.log("🎍🎍🎄" + Object.keys(result))
+//         } catch (ex) {
+//             const err = {}
+//             err.statusCode = 500;
+//             err.message = ex;
+//         }
+//         console.log("🎍🎍🎄" + Object.keys(result))
 
-        io.emit('chat message', data.msg, result)
-    })
+//         io.emit('chat message', data.msg, result)
+//     })
 
 
-});
+ });
 
 const port = process.env.PORT_SOCKET || 4000
 httpServer.listen(4000, (err) => {
