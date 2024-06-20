@@ -46,8 +46,8 @@ io.on("connection", (socket) => {
         socket.to(room).emit('chatroom_users', chatRoomUsers);
         socket.emit('chatroom_users', chatRoomUsers);
     });
-    socket.on('send_message', async (data) => {
 
+    socket.on('send_message', async (data) => {
         try {
             const { message, username, room, createdtime } = data;
             console.log(room+"💜💙💚💛🧡")
@@ -60,9 +60,23 @@ io.on("connection", (socket) => {
             err.statusCode = 500;
             err.message = ex;
         }
+
+        socket.on('send_message_to_group', async (data) => {
+            try {
+                const { message, room, createdtime } = data;
+                console.log(room+"💗💗💓💕")
+                io.in(room).emit('receive_message', data); 
+                const queryClass = postQuery("messages");
+                result = await executeQuery(queryClass, ["ruth", room, message, createdtime]);                
+            } catch (ex) {
+                const err = {}
+                err.statusCode = 500;
+                err.message = ex;
+            }
+
     });
 
-
+    });
     //-----------------------------------------------------------------------------------------------------------------
 
 //     socket.on('chat message', async (data, clientOffset, callback) => {

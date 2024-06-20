@@ -1,7 +1,7 @@
 import { socket } from '../../socket.js';
 import React, { useState, useEffect, useContext } from 'react';
-
-import {  UserContext } from "../../main";
+import { useLocation } from "react-router-dom";
+import { UserContext } from "../../main";
 
 import diaper from '../../../public/img/diaper.png'
 import sleep from '../../../public/img/sleep.png'
@@ -23,18 +23,21 @@ const Input = styled(MuiInput)`
 `;
 
 function ChatRoom(props) {
-    const [user, setUser] = useContext(UserContext)
 
+    const [user, setUser] = useContext(UserContext)
+  
+        // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
+console.log(props)
     return (
         <div >
             <div>
                 <ChatMessage socket={socket} />
-                <SendMessage socket={socket} username={user.username} room={props.baby.childId} />
+                <SendMessage socket={socket} username={user.username} room={props.addressee} />
             </div>
         </div>
     );
 
- 
+
 
 
 

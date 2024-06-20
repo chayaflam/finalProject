@@ -31,16 +31,16 @@ export default function Login() {
         navigate('/login')
     }, [])
 
+
+
     async function loginHandleSubmit(data) {
-        let status;
-        console.log()
-        await postFetchRequest(URL, 'auth/login', [data])
-            .then(res => {
-                setUser(prev => ({ ...prev, username: data.username, id: res.result.id }));
-                localStorage.setItem('user', JSON.stringify({ username: data.username, id: res.result.id, status: res.result.statusUser, token: res.token }))
-                navigate(`/${res.result.statusUser}/${data.username}`);
-            }
-            ).catch(error => { alert(error) })
+           await postFetchRequest(URL, 'auth/login', [data],(dataFromServer)=>{
+            setUser(prev => ({ ...prev, username: data.username, id: dataFromServer.result.id }));
+            localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, token: dataFromServer.token }))
+            navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
+           },(status) =>alert("Error: " + status) );
+            
+        
     }
 
     return (<>

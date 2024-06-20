@@ -5,15 +5,18 @@ import { authRouter } from './Router/authRouter.js';
 import { authMiddleWare } from './MiddleWare/authMiddleWare.js';
 import { logErrors } from './MiddleWare/logError.js';
 import { childrenRouter } from './Router/childrenRouter.js';
+import { classRouter } from './Router/classRouter.js';
 
 const app = express();
 app.use(cors())
 
 app.use(express.json());
 app.use('/auth', authRouter)
-
 app.use('/user', userRouter);
+
 app.use('/child', childrenRouter);
+app.use('/class',classRouter)
+
 app.use(authMiddleWare);
 app.use(logErrors);
 

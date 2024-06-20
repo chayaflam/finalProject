@@ -67,3 +67,24 @@ DROP INDEX `senderName_UNIQUE` ;
 
 ALTER TABLE `finalprojectdb`.`child` 
 ADD COLUMN `parentId` INT NOT NULL AFTER `teacherId`;
+
+CREATE TABLE `finalprojectdb`.`nurseryclass` (
+  `id` INT NOT NULL,
+  `idNurseryclass` INT NULL,
+  `teacherId` INT NOT NULL,
+  `ageRange` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `teacherId_UNIQUE` (`teacherId` ASC));
+
+ALTER TABLE `finalprojectdb`.`nurseryclass` 
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+INSERT INTO `finalprojectdb`.`nurseryclass` (`idNurseryclass`, `teacherId`, `ageRange`) VALUES ('1', '2', '3-6m');
+INSERT INTO `finalprojectdb`.`nurseryclass` (`idNurseryclass`, `teacherId`, `ageRange`) VALUES ('2', '3', '6-9m');
+
+
+ALTER TABLE `finalprojectdb`.`child` 
+CHANGE COLUMN `teacherId` `nurseyClassId` INT(11) NOT NULL ;
+
+ALTER TABLE `finalprojectdb`.`child` 
+CHANGE COLUMN `nurseyClassId` `nurseryClassId` INT(11) NOT NULL ;

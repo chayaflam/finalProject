@@ -6,6 +6,8 @@ import Parent from './components/parent/Parent';
 import Teacher from './components/teacher/Teacher';
 import Baby from './components/baby/Baby';
 import Header from './components/header/Header';
+import ChatRoom from './components/chatRoom/ChatRoom';
+import Class from './components/class/Class';
 
 export default function App() {
   return (
@@ -17,6 +19,7 @@ export default function App() {
             <Route path="baby/:babyname" element={<Baby />} />
           </Route>
           <Route path='teacher/:username' element={<Teacher />} >
+          <Route path="chatAll" element={<Class  />} />
             <Route path="baby/:babyname" element={<Baby />} />
           </Route>
         </Route>

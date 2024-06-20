@@ -23,6 +23,7 @@ export default function Parent() {
                               .then(data => {
                                     setBaby(data);
                               })
+                              
                   } catch {
                         alert("error")
                   }
@@ -31,7 +32,6 @@ export default function Parent() {
 
    
       const joinRoom = (baby, room) => {
-
             if (user.username !== '') {
                   let username = user.username;
                   socket.emit('join_room', { username, room });
@@ -39,7 +39,6 @@ export default function Parent() {
             navigate(`./baby/${baby.childName}`, { state: { baby: baby } });
       };
 
-      
       const logout = () => {
             localStorage.clear()
             setUser(null)
@@ -55,7 +54,7 @@ export default function Parent() {
                               // let img = ele.childName.replace(" ", "")
                               return <Button key={key} onClick={() => {
 
-                                    setRoom(baby.childId);     joinRoom(baby, baby.childId);
+                                    setRoom(baby.childId); joinRoom(baby, baby.childId);
                               }}  >
                                     <Image src={`${imgUrl}/${baby.childName}.png `} />
                               </Button>

@@ -1,12 +1,13 @@
 export const logErrors = (error, req, res, next) => {
-    console.log("error.statusCode "+error.statusCode);
+    console.log("error.statusCode " + error.statusCode);
     const statusCode = error && error.hasOwnProperty("statusCode") ? error.statusCode : 500;
     const message = error && error.hasOwnProperty("message") ? error.message : '';
-    console.error(`error statusCode:  ${statusCode} message: ${message} `)
+    console.error(`error statusCode:  ${statusCode} message: ${message}`);
     return res.status(statusCode).json({ error: errMessageForClient(statusCode) });
 }
 
 function errMessageForClient(statusCode) {
+    console.log("🎟🎨🎟🎨" + statusCode)
     switch (statusCode) {
         case 400:
             return 'Invalid request parameters';
