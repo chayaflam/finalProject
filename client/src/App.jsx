@@ -1,32 +1,76 @@
-import React from 'react';
-import './App.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/login/Login'
+import React, { useContext, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import Login from './components/login/Login';
 import Parent from './components/parent/Parent';
 import Teacher from './components/teacher/Teacher';
 import Baby from './components/baby/Baby';
 import Header from './components/header/Header';
-import ChatRoom from './components/chatRoom/ChatRoom';
 import Class from './components/class/Class';
+import withAuth from './withAuth.jsx';
+import NoPage from "./components/NoPage/NoPage.jsx";
+
+const ProtectedParent = withAuth(Parent);
+const ProtectedTeacher = withAuth(Teacher);
 
 export default function App() {
+  
+
   return (
-    <><Router>
+    <Router>
       <Routes>
         <Route path="/" element={<Header />} >
-          <Route path="/login" element={<Login />} />
-          <Route path="/parent/:username" element={<Parent />} >
-            <Route path="baby/:babyname" element={<Baby />} />
-          </Route>
-          <Route path='teacher/:username' element={<Teacher />} >
-          <Route path="chatAll" element={<Class  />} />
-            <Route path="baby/:babyname" element={<Baby />} />
-          </Route>
+        <Route
+          path="/parent/:username"
+          element={<ProtectedParent />} >
+          <Route path="baby/:babyname" element={<Baby />} />
+        </Route>
+        <Route
+          path="/teacher/:username"
+          element={<ProtectedTeacher />} >
+          <Route path="chatAll" element={<Class />} />
+          <Route path="baby/:babyname" element={<Baby />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
     </Router>
-    </>
-  )
+  );
 }
 
-//https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/
+
+
+
+//-----------------------------------------------------------------------------------------------------------------------------
+// import React from 'react';
+// import './App.css'
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import Login from './components/login/Login'
+// import Parent from './components/parent/Parent';
+// import Teacher from './components/teacher/Teacher';
+// import Baby from './components/baby/Baby';
+// import Header from './components/header/Header';
+// import ChatRoom from './components/chatRoom/ChatRoom';
+// import Class from './components/class/Class';
+
+// export default function App() {
+//   return (
+//     <><Router>
+//       <Routes>
+//         <Route path="/" element={<Header />} >
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/parent/:username" element={<Parent />} >
+//             <Route path="baby/:babyname" element={<Baby />} />
+//           </Route>
+//           <Route path='teacher/:username' element={<Teacher />} >
+//           <Route path="chatAll" element={<Class  />} />
+//             <Route path="baby/:babyname" element={<Baby />} />
+//           </Route>
+//         </Route>
+//       </Routes>
+//     </Router>
+//     </>
+//   )
+// }
+
+//-----------------------------------------------------------------------------------------------------------------------------

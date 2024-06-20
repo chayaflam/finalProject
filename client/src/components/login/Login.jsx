@@ -9,7 +9,6 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { getFetchRequest, postFetchRequest } from "../fetch";
 import './Login.css'
-
 const URL = "http://localhost:8080"
 
 export default function Login() {
@@ -31,8 +30,6 @@ export default function Login() {
         navigate('/login')
     }, [])
 
-
-
     async function loginHandleSubmit(data) {
            await postFetchRequest(URL, 'auth/login', [data],(dataFromServer)=>{
             setUser(prev => ({ ...prev, username: data.username, id: dataFromServer.result.id }));
@@ -42,6 +39,9 @@ export default function Login() {
             
         
     }
+
+
+   
 
     return (<>
         <div className="card flex justify-content-center">
