@@ -35,6 +35,7 @@ export default function Parent() {
             if (user.username !== '') {
                   let username = user.username;
                   socket.emit('join_room', { username, room });
+
             }
             navigate(`./baby/${baby.childName}`, { state: { baby: baby } });
       };
@@ -60,6 +61,7 @@ export default function Parent() {
                               </Button>
                         })}
                   </div>
+                  
                   <Outlet />
             </>
       )

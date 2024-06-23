@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { executeQuery } from "./Service/dataBase.js";
-import { postQuery } from "./Service/queries.js";
+import { postQuery, getByParamQuery, getTodayMessagesQuery } from "./Service/queries.js";
 import { ChatMessageController } from "./Controller/chatMessageController.js";
 
 
@@ -15,9 +15,9 @@ export const io = new Server(httpServer, {
 });
 
 //---------------------------------------------------------------------------------------------------------------------
-let chatRoom = ''; // E.g. javascript, node,...
+let chatRoom = '';
 let allUsers = [];
-let chatRoomUsers=[] ;// All users in current chat room
+let chatRoomUsers = [];
 const CHAT_BOT = 'ChatBot';
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -28,30 +28,32 @@ io.on("connection", (socket) => {
     //------------------------------------------------------------------------------------------------------------------
 
 
-    socket.on('join_room', (data) => {
+    socket.on('join_room', async (data) => {
         console.log("🎈🌺🌻🌼🌷🥀")
-        const { username, room } = data; // Data sent from client when join_room event emitted
-        socket.join(room);
-        let createdtime= Date.now(); // Current timestamp
-        // Send message to all users currently in the room, apart from the user that just joined
-        socket.to(room).emit('receive_message', {
-            message: `${username} has joined the chat room`,
-            username: CHAT_BOT,
-            createdtime,
-        });
-        chatRoom = room;
-        console.log(room)
-        allUsers.push({ id: socket.id, username, room });
-        chatRoomUsers = allUsers.filter((user) => user.room === room);
-        socket.to(room).emit('chatroom_users', chatRoomUsers);
-        socket.emit('chatroom_users', chatRoomUsers);
+        try {
+            const { username, room } = data; // Data sent from client when join_room event emitted
+            socket.join(room);
+            const createdtime = Date.now(); // Current timestamp
+            // Send message to all users currently in the room, apart from the user that just joined
+            const dataQuary = getTodayMessagesQuery();
+            result = await executeQuery(dataQuary, [room]);
+            chatRoomUsers = allUsers.filter((user) => user.username === room);
+            io.to(room).emit('receive_message',result)////////////////😊😙😚
+            chatRoom = room;
+            console.log(room)
+            allUsers.push({ id: socket.id, username, room });
+        } catch (ex) {
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+        }
     });
 
     socket.on('send_message', async (data) => {
         try {
             const { message, username, room, createdtime } = data;
-            console.log(room+"💜💙💚💛🧡")
-            io.in(room).emit('receive_message', data); // Send to all users in room, including sender
+            console.log(room + "💜💙💚💛🧡")
+            io.in(room).emit('receive_message', [data]); // Send to all users in room, including sender
             const queryChildren = postQuery("messages");
             result = await executeQuery(queryChildren, [username, room, message, createdtime]);
             //emit????
@@ -64,40 +66,40 @@ io.on("connection", (socket) => {
         socket.on('send_message_to_group', async (data) => {
             try {
                 const { message, room, createdtime } = data;
-                console.log(room+"💗💗💓💕")
-                io.in(room).emit('receive_message', data); 
+                console.log(room + "💗💗💓💕")
+                io.in(room).emit('receive_message', data);
                 const queryClass = postQuery("messages");
-                result = await executeQuery(queryClass, ["ruth", room, message, createdtime]);                
+                result = await executeQuery(queryClass, ["ruth", room, message, createdtime]);
             } catch (ex) {
                 const err = {}
                 err.statusCode = 500;
                 err.message = ex;
             }
 
-    });
+        });
 
     });
     //-----------------------------------------------------------------------------------------------------------------
 
-//     socket.on('chat message', async (data, clientOffset, callback) => {
-//         try {
-//             console.log("🎍🎍🎄" + Object.values(data))
-//             let date = new Date()
-//             const queryChildren = postQuery("messages");
-//             result = await executeQuery(queryChildren, [data.babyId, data.msg, date]);
+    //     socket.on('chat message', async (data, clientOffset, callback) => {
+    //         try {
+    //             console.log("🎍🎍🎄" + Object.values(data))
+    //             let date = new Date()
+    //             const queryChildren = postQuery("messages");
+    //             result = await executeQuery(queryChildren, [data.babyId, data.msg, date]);
 
-//         } catch (ex) {
-//             const err = {}
-//             err.statusCode = 500;
-//             err.message = ex;
-//         }
-//         console.log("🎍🎍🎄" + Object.keys(result))
+    //         } catch (ex) {
+    //             const err = {}
+    //             err.statusCode = 500;
+    //             err.message = ex;
+    //         }
+    //         console.log("🎍🎍🎄" + Object.keys(result))
 
-//         io.emit('chat message', data.msg, result)
-//     })
+    //         io.emit('chat message', data.msg, result)
+    //     })
 
 
- });
+});
 
 const port = process.env.PORT_SOCKET || 4000
 httpServer.listen(4000, (err) => {

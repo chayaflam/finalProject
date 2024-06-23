@@ -13,25 +13,25 @@ const ProtectedParent = withAuth(Parent);
 const ProtectedTeacher = withAuth(Teacher);
 
 export default function App() {
-  
+
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Header />} >
-        <Route
-          path="/parent/:username"
-          element={<ProtectedParent />} >
-          <Route path="baby/:babyname" element={<Baby />} />
-        </Route>
-        <Route
-          path="/teacher/:username"
-          element={<ProtectedTeacher />} >
-          <Route path="chatAll" element={<Class />} />
-          <Route path="baby/:babyname" element={<Baby />} />
-        </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NoPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NoPage />} />
+          <Route
+            path="/parent/:username"
+            element={<ProtectedParent />} >
+            <Route path="baby/:babyname" element={<Baby />} />
+          </Route>
+          <Route
+            path="/teacher/:username"
+            element={<ProtectedTeacher />} >
+            <Route path="chatAll" element={<Class />} />
+            <Route path="baby/:babyname" element={<Baby />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

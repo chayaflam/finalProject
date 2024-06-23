@@ -45,7 +45,6 @@ export default function Login() {
 
     return (<>
         <div className="card flex justify-content-center">
-            <Button label="Login" icon="pi pi-user" onClick={() => setVisible(true)} />
             <Dialog
                 visible={visible}
                 modal
@@ -88,7 +87,7 @@ export default function Login() {
                             </div>
                             <div className="flex align-items-center gap-2">
                                 <Button type="submit" value="Submit" label="Submit" text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
-                                <Button label="Cancel" onClick={(e) => { hide(e) }} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
+                                <Button label="Cancel" onClick={(e) => { hide(e);navigate('/') }} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
                             </div>
                         </div>
                     </form>

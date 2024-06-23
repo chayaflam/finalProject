@@ -8,7 +8,6 @@ export default function Baby() {
     const location =useLocation()
     return (<>
         <h1>baby!!!</h1>
-
         <ChatRoom addressee={location.state.addressee}/>
     </>)
 };

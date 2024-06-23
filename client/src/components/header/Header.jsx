@@ -1,25 +1,60 @@
 import React, { useEffect, useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import Logo from '../../../../img/Logo.jpg'
+import Logo from '../../../../img/logo.png'
+import { Menubar } from 'primereact/menubar';
 import 'primeicons/primeicons.css';
 import './Header.css'
 
 
 export default function Header() {
- 
+    const start = <img alt="logo" src={Logo} height="40" className="mr-2"></img>;
+    const items = [
+
+        {
+            label: 'Login',
+            icon: 'pi pi-home'
+        },
+        {
+            label: 'Register',
+            icon: 'pi pi-star'
+        },
+        {
+            label: 'About us',
+            icon: 'pi pi-search',
+
+
+        },
+        {
+            label: 'Calender',
+            icon: 'pi pi-envelope'
+        },
+        {
+            label: 'Weekly events',
+            icon: 'pi pi-envelope'
+        }
+
+    ];
+
+
+
+
     return (<>
+        <img className="logo" src={Logo} />
+        <div className="card">
+
+            <Menubar model={items} />
+        </div>
+        {/* //================ */}
         <nav>
-            <img src={Logo} />
+            {/* <img src={Logo} />
             <NavLink to="/login" icon="pi pi-user">Login</NavLink>
             <NavLink to="/">About us</NavLink>
-
+            <NavLink to="/">Register</NavLink>
+            <NavLink to="/">Calender</NavLink>
+            <NavLink to="/">Weekly events</NavLink> */}
         </nav>
-        <h2>A child's surroundings influences them</h2>
-        <h3> At Kindergarden, we recognize that your child’s surroundings can affect them, and for that<br />
-            reason, we’ve carefully considered everything we do. Absolutely everything. That’s the secret of<br />
-            Kindergarden. And if everything influences your child, then we want to ensure that this influence is<br />
-            positive. We’d be delighted to tell you more about this. Come along for a visit!</h3>
-
         <Outlet />
+        <img className="homePageImg" src="../../../public/img/homePage.jpg" />
+
     </>)
 };
