@@ -15,7 +15,9 @@ button {
     justify-content: center;
     display: inline-block;
 }
-
+.logOut{
+    width: 300px;
+}
 button{
     border-radius: 100%;
     border-width: 4px;

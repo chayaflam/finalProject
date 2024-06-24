@@ -13,25 +13,25 @@ export default function Header() {
     const items = [
 
         {
-            label: 'Login',
-            icon: 'pi pi-user',
-        },
-        {
             label: 'Register',
+            to: "/",
             icon: 'pi pi-star'
         },
         {
             label: 'About us',
+            to: "/",
             icon: 'pi pi-search',
 
 
         },
         {
             label: 'Calender',
+            to: "/",
             icon: 'pi pi-envelope'
         },
         {
             label: 'Weekly events',
+            to: "/",
             icon: 'pi pi-envelope'
         }
 
@@ -40,14 +40,18 @@ export default function Header() {
 
     return (<>
         <nav >
+       
+            <div className="card">
             <img src={Logo} className="logo" />
-            <div>
-                <NavLink to="/login" icon="pi pi-user">Login</NavLink>
+                <Menubar model={items} />
+            </div>
+
+            {/* <div>
                 <NavLink to="/">About us</NavLink>
                 <NavLink to="/">Register</NavLink>
                 <NavLink to="/">Calender</NavLink>
                 <NavLink to="/">Weekly events</NavLink>
-            </div>
+            </div> */}
         </nav>
 
 

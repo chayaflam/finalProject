@@ -1,10 +1,10 @@
 
-async function getFetchRequest(user, URL, tablename, params) {
+async function getFetchRequest(user, URL, tablename,token, params) {
     let dataFromServer;
     try {
         await fetch(`${URL}/${tablename}/${params[0]}`, {
             method: 'GET',
-            headers: { Authorization: user.token }
+            headers: { authorization: token }
         }).then(response => response.json()).then(data => {
             dataFromServer = data
 
@@ -35,7 +35,7 @@ async function getFetchRequest(user, URL, tablename, params) {
 // }
 
 async function postFetchRequest(URL, tablename, params, onReady, onError) {
-
+    console.log(params)
 
     fetch(`${URL}/${tablename}`, {
         method: 'POST',

@@ -1,10 +1,21 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { UserContext } from '../../main';
+import diaper from '../../../public/img/diaper.png'
+import sleep from '../../../public/img/sleep.png'
+import food from '../../../public/img/food.png'
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+import Slider from '@mui/material/Slider';
+import Input from '@mui/material/Input';
 
-
+import VolumeUp from '@mui/icons-material/VolumeUp';
 function ChatMessage({ socket, username, room }) {
+  const [user, setUser] = useContext(UserContext)
   const [messagesRecieved, setMessagesReceived] = useState([]);
 
 
@@ -31,6 +42,7 @@ function ChatMessage({ socket, username, room }) {
     setMessagesReceived([]);
   }, []);
 
+  
   // dd/mm/yyyy, hh:mm:ss
   function formatDateFromTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -39,6 +51,7 @@ function ChatMessage({ socket, username, room }) {
   console.log(messagesRecieved)
   return (
     <div >
+
       {messagesRecieved.map((msg, i) => (
         <div key={i}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -51,6 +64,8 @@ function ChatMessage({ socket, username, room }) {
           <br />
         </div>
       ))}
+
+ 
     </div>
   );
 }

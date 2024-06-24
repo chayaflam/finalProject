@@ -3,7 +3,6 @@ import { executeQuery } from '../dataBase.js';
 import { UserService } from "../userService.js";
 import { getPasswordQuery } from './passwordQuery.js'
 import jwt from 'jsonwebtoken'
-//const jwt =jsonwebtoken();
 export class UserPasswordService {
 
     async login(user) {

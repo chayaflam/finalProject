@@ -22,7 +22,7 @@ export default function Login() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        
+
         if (user) {
             try {
                 getFetchRequest(user, URL, 'user', [user.username])
@@ -35,8 +35,9 @@ export default function Login() {
     }, [])
 
     async function loginHandleSubmit(data) {
+        
         await postFetchRequest(URL, 'auth/login', [data], (dataFromServer) => { 
-            setUser(prev => ({ ...prev, username: data.username, id: dataFromServer.result.id }));
+            setUser(prev => ({ ...prev, username: data.username, id: dataFromServer.result.id}));
             Cookies.set('user',JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser}));
             Cookies.set('token', dataFromServer.token );
            // localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, token: dataFromServer.token }))

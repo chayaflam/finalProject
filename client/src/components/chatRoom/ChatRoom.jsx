@@ -29,8 +29,8 @@ function ChatRoom(props) {
     return (
         <div >
             <div>
-                <ChatMessage socket={socket} username={user.username} room={props.addressee}/>
                 <SendMessage socket={socket} username={user.username} room={props.addressee} />
+                <ChatMessage socket={socket} username={user.username} room={props.addressee} />
             </div>
         </div>
     );
