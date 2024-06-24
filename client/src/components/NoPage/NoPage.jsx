@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import Logo from '../../../../img/Logo.jpg'
+import Logo from '../../../../img/logo.png'
 import 'primeicons/primeicons.css';
 
 

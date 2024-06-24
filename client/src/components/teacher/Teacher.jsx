@@ -5,7 +5,7 @@ import { getFetchRequest } from "../fetch";
 import { socket } from "../../socket";
 import './Teacher.css'
 import { Button } from "primereact/button";
-import { Image } from 'primereact/image';
+ import { Image } from 'primereact/image';
 const URL = "http://localhost:8080"
 const imgUrl = '../../../public/img'
 
@@ -15,6 +15,7 @@ export default function Teacher() {
       const [user, setUser] = useContext(UserContext)
       const [childrenList, setChildrenList] = useState([]);
       const [room, setRoom] = useState('');
+      const [baby, setBaby] = useState();
       const location = useLocation()
 
       useEffect(() => {
@@ -59,24 +60,27 @@ export default function Teacher() {
             navigate('/')
       }
 
-      return (
-            <>
-                  <h1>Teacher</h1>
-                  <Button onClick={() => logout()}>Log out</Button>
-                  <div >
-                        <Button onClick={() => { setRoom(user.id); joinPublicRoom() }} >Sending a message to all kindergarten children</Button>
-                        {childrenList.length && childrenList.map((baby, key) => {
-                              // let img = ele.childName.replace(" ", "")
-                              return <Button key={key} onClick={() => {
-                                    setRoom(baby.childId);
-                                    joinPrivateRoom(baby, baby.childId);
-                              }}  >
-                                    <Image src={`${imgUrl}/${baby.childName}.png `} />
-                              </Button>
-                        })}
-                  </div>
-                  
-                  <Outlet />
-            </>
-      )
+   
+    return (
+        <>
+            <h1>Teacher</h1>
+            <Button onClick={() => logout()}>Log out</Button>
+        
+            <div className="image-wrapper">
+                <Button onClick={() => { setRoom(user.id); joinPublicRoom(); }} >Sending a message to all kindergarten children</Button>
+                {childrenList.length && childrenList.map((baby, key) => (
+                    <button key={key} onClick={() => {
+                      
+                        setRoom(baby.childId);
+                        joinPrivateRoom(baby, baby.childId);
+                    }}  >
+                        <div className="image-circle">
+                            <img src={`${imgUrl}/${baby.childName}.png `} alt={baby.childName} />
+                        </div>
+                    </button>
+                ))}
+            </div>
+                <Outlet />
+        </>
+    );
 }

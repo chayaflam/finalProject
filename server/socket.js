@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
             const dataQuary = getTodayMessagesQuery();
             result = await executeQuery(dataQuary, [room]);
             chatRoomUsers = allUsers.filter((user) => user.username === room);
-            io.to(room).emit('receive_message',result)////////////////😊😙😚
+            io.to(room).emit('receive_message', result)////////////////😊😙😚
             chatRoom = room;
             console.log(room)
             allUsers.push({ id: socket.id, username, room });
@@ -51,12 +51,13 @@ io.on("connection", (socket) => {
 
     socket.on('send_message', async (data) => {
         try {
-            const { message, username, room, createdtime } = data;
-            console.log(room + "💜💙💚💛🧡")
-            io.in(room).emit('receive_message', [data]); // Send to all users in room, including sender
+            const { username, room, message, createdtime } = data;
+            console.log(Object.keys(data) + "💜💙💚💛🧡")
+            const newData = { senderName: username, message: message, date: createdtime }
+            io.in(room).emit('receive_message', [newData]); // Send to all users in room, including sender
             const queryChildren = postQuery("messages");
             result = await executeQuery(queryChildren, [username, room, message, createdtime]);
-            //emit????
+            //emit????.
         } catch (ex) {
             const err = {}
             err.statusCode = 500;

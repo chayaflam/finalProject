@@ -4,15 +4,17 @@ import Logo from '../../../../img/logo.png'
 import { Menubar } from 'primereact/menubar';
 import 'primeicons/primeicons.css';
 import './Header.css'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Header() {
+    const navigate = useNavigate();
     const start = <img alt="logo" src={Logo} height="40" className="mr-2"></img>;
     const items = [
 
         {
             label: 'Login',
-            icon: 'pi pi-home'
+            icon: 'pi pi-user',
         },
         {
             label: 'Register',
@@ -39,22 +41,16 @@ export default function Header() {
 
 
     return (<>
-        <img className="logo" src={Logo} />
-        <div className="card">
-
-            <Menubar model={items} />
-        </div>
-        {/* //================ */}
-        <nav>
-            {/* <img src={Logo} />
+        <nav >
+            <img src={Logo} />
             <NavLink to="/login" icon="pi pi-user">Login</NavLink>
             <NavLink to="/">About us</NavLink>
             <NavLink to="/">Register</NavLink>
             <NavLink to="/">Calender</NavLink>
-            <NavLink to="/">Weekly events</NavLink> */}
+            <NavLink to="/">Weekly events</NavLink>
         </nav>
-        <Outlet />
-        <img className="homePageImg" src="../../../public/img/homePage.jpg" />
 
+
+        <Outlet />
     </>)
 };

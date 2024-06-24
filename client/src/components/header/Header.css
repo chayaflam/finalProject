@@ -1,3 +1,4 @@
+
 span.flag {
     width: 44px;
     height: 30px;
@@ -742,6 +743,7 @@ img.flag {
 
 html {
     font-size: 14px;
+
 }
 
 body {
@@ -759,4 +761,9 @@ body {
     padding: 2rem;
     border-radius: 10px;
     margin-bottom: 1rem;
+}
+
+nav{
+    position: fixed;
+    z-index: 100;
 }

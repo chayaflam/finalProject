@@ -1,13 +1,17 @@
 import React, { useEffect, useContext } from "react";
 import { useForm } from 'react-hook-form';
 import ChatRoom from "../chatRoom/ChatRoom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+const imgUrl = '../../../public/img'
 
 export default function Baby() {
     const URL = "http://localhost:8080"
-    const location =useLocation()
+    const location = useLocation();
+    let { babyname } = useParams();
+    console.log(babyname)
     return (<>
         <h1>baby!!!</h1>
-        <ChatRoom addressee={location.state.addressee}/>
+        <img src={`${imgUrl}/${babyname}.png `} alt={babyname} />
+        <ChatRoom addressee={location.state.addressee} />
     </>)
 };

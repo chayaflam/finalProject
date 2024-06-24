@@ -10,21 +10,20 @@ const SendMessage = ({ socket, username, room }) => {
 
 
   const sendMessage = () => {
-      if (message !== '') {
-        const createdtime= new Date().toISOString().slice(0, 19).replace('T', ' ')
-        console.log(room)
-        socket.emit('send_message', { username, room, message,createdtime });
-        setMessage('');
-      }
+    if (message !== '') {
+      const createdtime = new Date().toISOString().slice(0, 19).replace('T', ' ')
+      console.log(room)
+      console.log(createdtime)
+      socket.emit('send_message', { username, room, message, createdtime });
+      setMessage('');
+    }
   };
 
   return (
     <div >
-      <input
-        placeholder='Message...'
+      <input placeholder='Message...'
         onChange={(e) => setMessage(e.target.value)}
-        value={message}
-      />
+        value={message} />
       <button className='btn btn-primary' onClick={sendMessage}>
         Send Message
       </button>

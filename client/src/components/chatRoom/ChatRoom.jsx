@@ -23,15 +23,13 @@ const Input = styled(MuiInput)`
 `;
 
 function ChatRoom(props) {
-
     const [user, setUser] = useContext(UserContext)
-  
-        // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
-console.log(props)
+    // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
+    console.log(props)
     return (
         <div >
             <div>
-                <ChatMessage socket={socket} />
+                <ChatMessage socket={socket} username={user.username} room={props.addressee}/>
                 <SendMessage socket={socket} username={user.username} room={props.addressee} />
             </div>
         </div>

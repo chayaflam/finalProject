@@ -4,7 +4,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 
-function ChatMessage({ socket }) {
+function ChatMessage({ socket, username, room }) {
   const [messagesRecieved, setMessagesReceived] = useState([]);
 
 
@@ -12,6 +12,7 @@ function ChatMessage({ socket }) {
   useEffect(() => {
     socket.on('receive_message', (data) => {
       console.log(data);
+      data.length > 1 && setMessagesReceived([]);
       data.map(msg => {
         setMessagesReceived((state) => [
           ...state, {
@@ -20,15 +21,14 @@ function ChatMessage({ socket }) {
             createdtime: msg.date,
           }
         ]);
-      }
-      )
+      })
     });
-
     return () => socket.off('receive_message');
   }, [socket]);
 
   useEffect(() => {
-  setMessagesReceived([]);
+    socket.emit('join_room', { username, room });
+    setMessagesReceived([]);
   }, []);
 
   // dd/mm/yyyy, hh:mm:ss
