@@ -38,16 +38,16 @@ export default function Header() {
     ];
 
 
-
-
     return (<>
         <nav >
-            <img src={Logo} />
-            <NavLink to="/login" icon="pi pi-user">Login</NavLink>
-            <NavLink to="/">About us</NavLink>
-            <NavLink to="/">Register</NavLink>
-            <NavLink to="/">Calender</NavLink>
-            <NavLink to="/">Weekly events</NavLink>
+            <img src={Logo} className="logo" />
+            <div>
+                <NavLink to="/login" icon="pi pi-user">Login</NavLink>
+                <NavLink to="/">About us</NavLink>
+                <NavLink to="/">Register</NavLink>
+                <NavLink to="/">Calender</NavLink>
+                <NavLink to="/">Weekly events</NavLink>
+            </div>
         </nav>
 
 

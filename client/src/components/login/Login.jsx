@@ -8,17 +8,21 @@ import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { getFetchRequest, postFetchRequest } from "../fetch";
+import Cookies from 'js-cookie';
+
+
 import './Login.css'
 const URL = "http://localhost:8080"
 
 export default function Login() {
-   
+
     const [user, setUser] = useContext(UserContext)
     const [visible, setVisible] = useState(true);
     const { register, handleSubmit } = useForm()
     const navigate = useNavigate();
 
     useEffect(() => {
+        
         if (user) {
             try {
                 getFetchRequest(user, URL, 'user', [user.username])
@@ -31,17 +35,19 @@ export default function Login() {
     }, [])
 
     async function loginHandleSubmit(data) {
-           await postFetchRequest(URL, 'auth/login', [data],(dataFromServer)=>{
+        await postFetchRequest(URL, 'auth/login', [data], (dataFromServer) => { 
             setUser(prev => ({ ...prev, username: data.username, id: dataFromServer.result.id }));
-            localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, token: dataFromServer.token }))
+            Cookies.set('user',JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser}));
+            Cookies.set('token', dataFromServer.token );
+           // localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, token: dataFromServer.token }))
             navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
-           },(status) =>alert("Error: " + status) );
-            
-        
+        }, (status) => alert("Error: " + status));
+
+
     }
 
 
-   
+
 
     return (<>
         <div className="card flex justify-content-center">
@@ -87,7 +93,7 @@ export default function Login() {
                             </div>
                             <div className="flex align-items-center gap-2">
                                 <Button type="submit" value="Submit" label="Submit" text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
-                                <Button label="Cancel" onClick={(e) => { hide(e);navigate('/') }} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
+                                <Button label="Cancel" onClick={(e) => { hide(e); navigate('/') }} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
                             </div>
                         </div>
                     </form>

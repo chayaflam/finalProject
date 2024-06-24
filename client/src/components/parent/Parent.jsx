@@ -5,7 +5,7 @@ import { getFetchRequest } from "../fetch";
 import { socket } from "../../socket";
 import { Button } from "primereact/button";
 import { Image } from 'primereact/image';
-
+import Cookies from 'js-cookie';
 
 const URL = "http://localhost:8080"
 const imgUrl = '../../../public/img'
@@ -23,14 +23,14 @@ export default function Parent() {
                               .then(data => {
                                     setBaby(data);
                               })
-                              
+
                   } catch {
                         alert("error")
                   }
             }
       }, [])
 
-   
+
       const joinRoom = (baby, room) => {
             if (user.username !== '') {
                   let username = user.username;
@@ -41,7 +41,10 @@ export default function Parent() {
       };
 
       const logout = () => {
-            localStorage.clear()
+            const cookies = Object.keys(Cookies.get());
+            cookies.forEach(cookie => {
+                  Cookies.remove(cookie);
+            });
             setUser(null)
             navigate('/')
       }
@@ -61,7 +64,7 @@ export default function Parent() {
                               </Button>
                         })}
                   </div>
-                  
+
                   <Outlet />
             </>
       )

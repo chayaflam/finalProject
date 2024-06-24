@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react"
 import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { UserContext } from "../../main";
 import { getFetchRequest } from "../fetch";
 import { socket } from "../../socket";
@@ -54,12 +55,19 @@ export default function Teacher() {
             navigate(`./chatAll`, { state: { addressee: room } });
       };
 
+
+
       const logout = () => {
-            localStorage.clear()
+            const cookies = Object.keys(Cookies.get());
+            cookies.forEach(cookie => {
+                Cookies.remove(cookie);
+            });
+          //  localStorage.clear()
             setUser(null)
             navigate('/')
       }
 
+   
    
     return (
         <>
