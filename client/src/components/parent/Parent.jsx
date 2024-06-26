@@ -6,6 +6,7 @@ import { socket } from "../../socket";
 import { Button } from "primereact/button";
 import { Image } from 'primereact/image';
 import Cookies from 'js-cookie';
+import './Parent.css'
 
 const URL = "http://localhost:8080"
 const imgUrl = '../../../public/img'
@@ -15,11 +16,12 @@ export default function Parent() {
       const [user, setUser] = useContext(UserContext)
       const [baby, setBaby] = useState({})
       const [room, setRoom] = useState('');
-
+    const token = Cookies.get('token');
+      console.log(user)
       useEffect(() => {
             if (user) {
                   try {
-                        getFetchRequest(user, URL, 'child/parent', [user.id])
+                        getFetchRequest(user, URL, 'child/parent',token, [user.id])
                               .then(data => {
                                     setBaby(data);
                               })
@@ -40,19 +42,11 @@ export default function Parent() {
             navigate(`./baby/${baby.childName}`, { state: { baby: baby } });
       };
 
-      const logout = () => {
-            const cookies = Object.keys(Cookies.get());
-            cookies.forEach(cookie => {
-                  Cookies.remove(cookie);
-            });
-            setUser(null)
-            navigate('/')
-      }
+      
 
       return (
-            <>
-                  <h1>PARENT!!!!!</h1>
-                  <Button onClick={() => logout()}>Log out</Button>
+            <>  <h1>hi {user.name}</h1>
+                
                   <div >
                         {baby.length && baby.map((baby, key) => {
                               // let img = ele.childName.replace(" ", "")

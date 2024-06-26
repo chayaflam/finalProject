@@ -57,22 +57,9 @@ export default function Teacher() {
 
 
 
-      const logout = () => {
-            const cookies = Object.keys(Cookies.get());
-            cookies.forEach(cookie => {
-                  Cookies.remove(cookie);
-            });
-            //  localStorage.clear()
-            setUser(null)
-            navigate('/')
-      }
-
-
-
       return (
             <>
                   <h1>Teacher</h1>
-                  <Button  className="logOut" onClick={() => logout()}>Log out</Button>
 
                   <div className="image-wrapper">
                         <Button onClick={() => { setRoom(user.id); joinPublicRoom(); }} >Sending a message to all kindergarten children</Button>
