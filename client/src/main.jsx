@@ -8,6 +8,7 @@ import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import './flags.css';
 export const UserContext = createContext();
 
 const RootComponent = () => {

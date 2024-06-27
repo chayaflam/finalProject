@@ -79,3 +79,6 @@ button.p-button:active {
 .button-container button:active {
     background-color: rgb(255, 160, 158); /* Active background color */
 }
+.inputText{
+    background-color:#a2c5f8 !important;
+}

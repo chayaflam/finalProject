@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import Login from './components/login/Login';
 import Parent from './components/parent/Parent';
 import Teacher from './components/teacher/Teacher';
+import Galeria from "./components/teacher/Galeria";
 import Baby from './components/baby/Baby';
 import Header from './components/header/Header';
 import Class from './components/class/Class';
@@ -11,6 +12,7 @@ import NoPage from "./components/NoPage/NoPage.jsx";
 import HomePage from './components/homePage/HomePage.jsx';
 import { UserContext } from "./main.jsx";
 import { Outlet } from "react-router-dom";
+
 const ProtectedParent = withAuth(Parent);
 const ProtectedTeacher = withAuth(Teacher);
 
@@ -21,6 +23,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
+        {/* <Route path="/" element={<Galeria />}/> */}
         <Route path="/" element={<Header />} >
           <Route path="login" element={<Login />} />
           {user && (
@@ -30,6 +33,7 @@ export default function App() {
           {user && (<Route path="/teacher/:username" element={<Outlet />} >
             <Route index element={<ProtectedTeacher />} />
             <Route path="chatAll" element={<Class />} />
+            <Route path="galeria" element={<Galeria />}/>
             <Route path="baby/:babyname" element={<Baby />} />
           </Route>)}
           <Route path="*" element={<NoPage />} />
