@@ -7,6 +7,7 @@ import { socket } from "../../socket";
 import './Teacher.css'
 import { Button } from "primereact/button";
 import { Image } from 'primereact/image';
+import Galeria from "./Galeria";
 const URL = "http://localhost:8080"
 const imgUrl = '../../../public/img'
 
@@ -27,9 +28,8 @@ export default function Teacher() {
                               .then(data => {
                                     setChildrenList(data);
                               })
-                        getFetchRequest(user, URL, 'class/teacher',token, [user.id])
+                        getFetchRequest(user, URL, 'class/teacher', token, [user.id])
                               .then(data => {
-                                    console.log(data)
                                     setRoom(data[0].idNurseryclass)
                               })
                   } catch {
@@ -56,26 +56,34 @@ export default function Teacher() {
       };
 
 
-
       return (
             <>
-                  <h1>Teacher</h1>
+                  <h1>Hi, {user.name}</h1>
 
                   <div className="image-wrapper">
                         <Button onClick={() => { setRoom(user.id); joinPublicRoom(); }} >Sending a message to all kindergarten children</Button>
-                        {childrenList.length && childrenList.map((baby, key) => (
-                              <button key={key} onClick={() => {
+                        <div> 
+                             <Galeria childrenList={childrenList}/>
+                             {/* <Galeria children={childrenList}/> */}
+                        </div>
+                       
+                        {/* <div>
+                              {childrenList.length && childrenList.map((baby, key) => (
+                                    <button key={key} onClick={() => {
 
-                                    setRoom(baby.childId);
-                                    joinPrivateRoom(baby, baby.childId);
-                              }}  >
-                                    <div className="image-circle">
-                                          <img src={`${imgUrl}/${baby.childName}.png `} alt={baby.childName} />
-                                    </div>
-                              </button>
-                        ))}
+                                          setRoom(baby.childId);
+                                          joinPrivateRoom(baby, baby.childId);
+                                    }}  >
+                                          <div className="image-circle">
+                                                <img src={`${imgUrl}/${baby.childName}.png `} alt={baby.childName} />
+                                          </div>
+                                    </button>
+
+                              ))}
+                        </div> */}
                   </div>
                   <Outlet />
             </>
       );
 }
+///------------------------------------------
