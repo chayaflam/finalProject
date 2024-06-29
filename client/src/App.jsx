@@ -11,6 +11,7 @@ import NoPage from "./components/NoPage/NoPage.jsx";
 import HomePage from './components/homePage/HomePage.jsx';
 import { UserContext } from "./main.jsx";
 import { Outlet } from "react-router-dom";
+import Calendar from "./components/calendar/Calendar.jsx";
 const ProtectedParent = withAuth(Parent);
 const ProtectedTeacher = withAuth(Teacher);
 
@@ -23,6 +24,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Header />} >
           <Route path="login" element={<Login />} />
+          <Route path="calendar" element={<Calendar />} />
           {user && (
             <Route path="parent/:username" element={<ProtectedParent />} >
               <Route path="baby/:babyname" element={<Baby />} />

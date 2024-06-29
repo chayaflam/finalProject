@@ -90,7 +90,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------
 import React, { useContext, useRef } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import Logo from '../../../public/img/Kidder.jpg';
+import Logo from '../../../public/img/kidder.jpg';
 import { Menubar } from 'primereact/menubar';
 import 'primeicons/primeicons.css';
 import './Header.css';
