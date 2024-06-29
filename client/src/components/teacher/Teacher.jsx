@@ -7,7 +7,7 @@ import { socket } from "../../socket";
 import './Teacher.css'
 import { Button } from "primereact/button";
 import { Image } from 'primereact/image';
-import Galeria from "./Galeria";
+// import Galeria from "./Galeria";
 const URL = "http://localhost:8080"
 const imgUrl = '../../../public/img'
 
@@ -63,8 +63,8 @@ export default function Teacher() {
                   <div className="image-wrapper">
                         <Button onClick={() => { setRoom(user.id); joinPublicRoom(); }} >Sending a message to all kindergarten children</Button>
                         <div> 
-                             <Galeria childrenList={childrenList}/>
-                             {/* <Galeria children={childrenList}/> */}
+                            {/* <Galeria childrenList={childrenList}/>
+                              <Galeria children={childrenList}/> */}
                         </div>
                        
                         {/* <div>
