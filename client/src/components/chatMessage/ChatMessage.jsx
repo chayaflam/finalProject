@@ -23,7 +23,7 @@ function ChatMessage({ socket, username, room }) {
   useEffect(() => {
     socket.on('receive_message', (data) => {
       console.log(data);
-      data.length > 1 && setMessagesReceived([]);
+     data.length > 1 && setMessagesReceived([]);
       data.map(msg => {
         setMessagesReceived((state) => [
           ...state, {

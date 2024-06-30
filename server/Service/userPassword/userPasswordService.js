@@ -7,7 +7,7 @@ export class UserPasswordService {
 
     async login(user) {
         const authService = new UserService();
-        const resultItem = await authService.getUserByUsername(user.username);
+        const resultItem = await authService.getUserByUsername(user.username);//
         if (resultItem) {
             const queryUserPassword = getPasswordQuery();
             const resultCheckPassword = await executeQuery(queryUserPassword, Object.values({ userId: resultItem.id, password: user.userPassword }));
@@ -19,7 +19,7 @@ export class UserPasswordService {
                 };
                 return {
                     resultItem: resultItem,
-                    token: jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1h'})
+                    token: jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' })
                 };
             }
             return null;

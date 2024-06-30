@@ -1116,3 +1116,8 @@ img {
 .pBold{
     color: #27892f;
 }
+.icon{
+    padding: 5px;
+    width: 25px;
+    height: auto;
+}

@@ -23,12 +23,11 @@ export default function Teacher() {
       useEffect(() => {
             if (user) {
                   try {
-
-                        getFetchRequest(user, URL, 'child/teacher', token, [user.id])
+                        getFetchRequest( URL, 'child/teacher',  [user.id])
                               .then(data => {
                                     setChildrenList(data);
                               })
-                        getFetchRequest(user, URL, 'class/teacher', token, [user.id])
+                        getFetchRequest( URL, 'class/teacher',  [user.id])
                               .then(data => {
                                     setRoom(data[0].idNurseryclass)
                               })
@@ -67,7 +66,7 @@ export default function Teacher() {
                               <Galeria children={childrenList}/> */}
                         </div>
                        
-                        {/* <div>
+                        <div className="childrenList">
                               {childrenList.length && childrenList.map((baby, key) => (
                                     <button key={key} onClick={() => {
 
@@ -80,7 +79,7 @@ export default function Teacher() {
                                     </button>
 
                               ))}
-                        </div> */}
+                        </div>
                   </div>
                   <Outlet />
             </>

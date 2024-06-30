@@ -1,0 +1,17 @@
+.sleep{
+background-image: url( '../../../public/img/sleep.png');
+background-size: cover !important;
+}
+.food{
+    background-image: url(  '../../../public/img/sleep.png');
+    background-size: cover;
+}
+.diaper{
+    background-image: url( '../../../public/img/diaper.png');
+    background-size: cover;
+}
+.sendMessage{
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}

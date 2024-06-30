@@ -1,10 +1,13 @@
 
-async function getFetchRequest(user, URL, tablename,token, params) {
+async function getFetchRequest(URL, tablename, params) {
     let dataFromServer;
     try {
         await fetch(`${URL}/${tablename}/${params[0]}`, {
             method: 'GET',
-            headers: { authorization: token }
+          //  headers: { authorization: token },
+            credentials: 'include',
+            withCredentials: true, // should be there
+
         }).then(response => response.json()).then(data => {
             dataFromServer = data
 

@@ -21,7 +21,7 @@ button.p-button {
 }
 
 button.p-button:hover {
-    background-color: rgb(98, 212, 211); /* Hover background color */
+    background-color:#afc9eb; /* Hover background color */
     transform: scale(1.05);
 }
 
@@ -42,7 +42,7 @@ button.p-button:active {
 .dialog input {
     border: none;
     padding: 10px;
-    background-color: rgb(250, 248, 218); /* Input background color */
+    background-color:#afc9eb; /* Input background color */
     color: rgb(32, 93, 118); /* Input text color */
     border-radius: 5px;
     font-size: 16px;
@@ -78,4 +78,10 @@ button.p-button:active {
 
 .button-container button:active {
     background-color: rgb(255, 160, 158); /* Active background color */
+}
+.inputText{
+    background-color: #e8f0fe;
+}
+.labelText{
+color:#6ba2fc !important;
 }

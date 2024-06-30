@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken'
-
 export const authMiddleWare = (req, res, next) => {
-  const token = req.headers['authorization'];
+  console.log(req)
+
+  const token = req.cookie.token;
+  //////
   if (!token) {
     return res.status(401).json({ error: 'No token provided.' });
   }
@@ -14,6 +16,7 @@ export const authMiddleWare = (req, res, next) => {
       // return res.status(402).json({ error: 'Invalid token.' });
     }
     req.userId = decoded.userId;
+    
     next();
   });
 };
