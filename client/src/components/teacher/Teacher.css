@@ -46,9 +46,7 @@ button img {
 
 
 .children-container {
-    width: 10%; /* Set the width to 10% of the page width */
-    display: flex;
-    flex-direction: column;
+   
 }
 
 .baby-row {
@@ -63,4 +61,52 @@ button img {
 
 .baby-name {
     font-size: 16px;
+}
+.teacher-name {
+    text-align: center; /* Center the teacher name horizontally */
+    margin-top: 20px; /* Adjust top margin for spacing */
+}
+
+.autocomplete-container {
+    display: flex;
+    max-width: fit-content;
+    margin: 0 auto;
+}
+.babies {
+    display: flex;
+    flex-direction: column; /* Display babies in a column */
+    align-items: center; /* Center align the content horizontally */
+    justify-content: center; /* Center align the content vertically */
+    margin-top: 20px; /* Adjust top margin for spacing */
+}
+.baby-row {
+   
+  /*  display: flex;
+    align-items: center; /* Center the content vertically within the baby-row */
+  /*  justify-content: center; /* Center the content horizontally within the baby-row */
+  /*  margin-bottom: 10px; /* Adjust spacing between each baby row */
+}
+
+.image-circle {
+    width: 100px; /* Increase the width and height to make the circle slightly bigger */
+    height: 100px;
+ 
+    overflow: hidden; /* Ensure image stays within the circle */
+}
+
+.image-circle img {
+    width: 100%; /* Fill the circular shape with the image */
+    height: auto; /* Maintain image aspect ratio */
+    border:solid 2.5px #6ba2fc;
+    border-radius: 50%; /* Create a circular shape */
+    /* border-width: 55px; */
+    
+}
+
+.white-bg {
+    background-color: #FFFFFF; /* White background */
+}
+
+.red-bg {
+    background-color: #59abf8; /* Red background */
 }

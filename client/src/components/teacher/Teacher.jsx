@@ -18,6 +18,8 @@ import Select from '@mui/material/Select';
 import Baby from "../baby/Baby";
 const URL = "http://localhost:8080"
 const imgUrl = '../../../public/img'
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 export default function Teacher() {
 
@@ -30,6 +32,8 @@ export default function Teacher() {
       const token = Cookies.get('token');
       const [value, setValue] = useState('');
       const isBabyRoute = location.pathname.includes("baby");
+      const isChatAllRoute = location.pathname.includes("chatAll");
+
       useEffect(() => {
             if (user) {
                   try {
@@ -56,7 +60,7 @@ export default function Teacher() {
                   let username = user.username;
                   socket.emit('join_room', { username, room });
             }
-           if(isBabyRoute) 
+             if(isBabyRoute||isChatAllRoute)
             navigate(`../baby/${baby.childName}`, { state: { addressee: baby.childId } }) 
       //        const baseUrl = window.location.origin + window.location.pathname;
       //        baseUrl=baseUrl.replace(`baby`,`baby/${baby.childName}`);
@@ -72,7 +76,10 @@ export default function Teacher() {
                   let username = user.username;
                   socket.emit('join_room', { username, room });
             }
-            navigate(`./chatAll`, { state: { addressee: room } });
+             if(isBabyRoute||isChatAllRoute)
+                  navigate(`../chatAll`, { state: { addressee: room } })
+            else
+                   navigate(`./chatAll`, { state: { addressee: room } });
       };
   
       // const handleChange = (event) => {
@@ -83,50 +90,54 @@ export default function Teacher() {
 
       // };
       const handleChange = (event) => {
-            let selectedBaby = event.target.value;
+            let selectedBaby= childrenList.filter(baby=>baby==event)[0]
             setValue(selectedBaby.childName);
             setRoom(selectedBaby.childId);
             setBaby(selectedBaby); // Update the state with the selected baby
             joinPrivateRoom(selectedBaby, selectedBaby.childId);
-        };
+      };
   
  
 
       return (
             <>
-                  <h1>Hi, {user.name}</h1>
+                  <h1 className="teacher-name">Hi, {user.name}</h1>
                   <div className="children-container">
-                  <Box >
-                        <FormControl fullWidth>
-                              <InputLabel id="demo-simple-select-label"><IoIosSearch/> Search</InputLabel>
-                              <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={value}
-                                    label="Search"
-                                    onChange={handleChange}
-                              >
-                                   {childrenList.map((baby,index)=>(
-                                     <MenuItem key={index} value={baby}>{baby.childName}</MenuItem>
-                                   ))}
-                                  
-                              </Select>
-                        </FormControl>
-                  </Box>
-
-                        {childrenList.map((baby, index) => (
-                              <div key={index} className="baby-row" onClick={() => {
-                                    setRoom(baby.childId);
-                                    joinPrivateRoom(baby, baby.childId);
-                              }}>
-                                    <div className="image-circle">
-                                          <img src={`${imgUrl}/${baby.childName}.png`} alt={baby.childName} />
-                                    </div>
-                                    <span className="baby-name">{baby.childName}</span>
-                              </div>
-                        ))}
+                  <div className="autocomplete-container">
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    onChange={(event, newValue) => handleChange(newValue)}
+                    options={childrenList.map(child => child.childName)}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="Search" />}
+                    />
                   </div>
-                  <Button onClick={() => { setRoom(user.id); joinPublicRoom(); }} >Sending a message to all kindergarten children</Button>
+                  <div className="babies">
+                  {childrenList.map((baby, index) => (
+    <div key={index} className={`baby-row ${index % 2 === 0 ? 'white-bg' : 'red-bg'}`} onClick={() => {
+        setRoom(baby.childId);
+        joinPrivateRoom(baby, baby.childId);
+    }}>
+        <div className="image-circle">
+            <img src={`${imgUrl}/${baby.childName}.png`} alt={baby.childName} />
+        </div>
+        <span className="baby-name">{baby.childName}</span>
+    </div>
+))}
+    <div className="baby-row" onClick={() => {
+        setRoom(user.id);
+        joinPublicRoom();
+    }}>
+        <span className="baby-name">all class</span>
+    </div>
+</div>
+                  </div>
+           
+
+
+
+                  {/* <Button onClick={() => { setRoom(user.id); joinPublicRoom(); }} >Sending a message to all kindergarten children</Button> */}
                   <Outlet />
             </>
       );

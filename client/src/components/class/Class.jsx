@@ -2,12 +2,22 @@ import React, { useEffect, useContext } from "react";
 import { useForm } from 'react-hook-form';
 import ChatRoom from "../chatRoom/ChatRoom";
 import { useLocation } from "react-router-dom";
+import './class.css'
+import Teacher from "../teacher/Teacher";
 
 export default function Class() {
     const URL = "http://localhost:8080"
     const location =useLocation()
     return (<>
-        <h1>class!!!</h1>
-        <ChatRoom addressee={location.state.addressee}/>
+
+
+        <div className="container">
+            <div className="teacher">
+            <Teacher/>
+            </div>
+            <div className="class">
+                <ChatRoom addressee={location.state.addressee} />
+            </div>
+        </div>
     </>)
 };

@@ -1,0 +1,33 @@
+.class{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90px;
+
+}
+
+.imgListItem{
+    height: 15% !important;
+    width: 25% !important;
+}
+    
+
+.container {
+    display: flex;
+}
+
+.teacher {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    background-color: #e1eeff;
+    border-radius: 10px;
+    width: 100px;
+    margin: 20px;
+}
+
+
+.class {
+    flex: 2;
+    text-align: center;
+}
