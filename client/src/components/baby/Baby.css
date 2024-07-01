@@ -11,3 +11,16 @@
     width: 25% !important;
 }
     
+
+.container {
+    display: flex;
+}
+
+.teacher {
+    flex: 1;
+}
+
+.baby {
+    flex: 2;
+    text-align: center;
+}

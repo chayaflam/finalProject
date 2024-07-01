@@ -1,13 +1,12 @@
 
-async function getFetchRequest(URL, tablename, params) {
+async function getFetchRequest(user,URL, tablename,token, params) {
     let dataFromServer;
     try {
         await fetch(`${URL}/${tablename}/${params[0]}`, {
             method: 'GET',
-          //  headers: { authorization: token },
-            credentials: 'include',
-            withCredentials: true, // should be there
-
+            headers:{
+                'Authorization':token
+            }
         }).then(response => response.json()).then(data => {
             dataFromServer = data
 
@@ -43,7 +42,9 @@ async function postFetchRequest(URL, tablename, params, onReady, onError) {
     fetch(`${URL}/${tablename}`, {
         method: 'POST',
         body: JSON.stringify(params[0]),
-        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        }
     }).then(response => {
         if (!response.ok)
             throw response.statusText;

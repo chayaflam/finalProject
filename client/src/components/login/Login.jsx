@@ -37,10 +37,10 @@ export default function Login() {
     async function loginHandleSubmit(data) {
 
         await postFetchRequest(URL, 'auth/login', [data], (dataFromServer) => {
-            setUser({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser,name: dataFromServer.result.name });
-            Cookies.set('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser,name: dataFromServer.result.name }));
-         //   Cookies.set('token', dataFromServer.token);
-             localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, token: dataFromServer.token }))
+            setUser({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, name: dataFromServer.result.name });
+            Cookies.set('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, name: dataFromServer.result.name }));
+            Cookies.set('token', dataFromServer.token);
+            localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, token: dataFromServer.token }))
             navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
         }, (status) => alert("Error: " + status));
 
@@ -59,7 +59,7 @@ export default function Login() {
                 content={({ hide }) => (
                     <form onSubmit={handleSubmit(loginHandleSubmit)}>
                         <div className="flex flex-column px-8 py-5 gap-4" style={{ borderRadius: '12px', backgroundImage: ' radial-gradient(circle at left top,#fffcf5,#fffcf5)' }}>
-                      <img alt="logo" src={kidder} className="logo"/> 
+                            <img alt="logo" src={kidder} className="logo" />
 
                             {/* <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" className="block mx-auto"> 
 

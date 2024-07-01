@@ -9,6 +9,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import "./Baby.css"
+import Teacher from "../teacher/Teacher";
 const imgUrl = '../../../public/img'
 
 export default function Baby() {
@@ -19,22 +20,36 @@ export default function Baby() {
     return (<>
         {/* <img className="baby" src={`${imgUrl}/${babyname}.png `} alt={babyname} />
         <p>{babyname}</p> */}
+        <div className="container">
+            <div className="teacher">
+                <Teacher />
+            </div>
+            <div className="baby">
+                <ImageListItem >
+                    <img className="imgListItem" src={`${imgUrl}/${babyname}.png`} />
+                    <ImageListItemBar
+                        title={babyname}
+                        actionIcon={
+                            <IconButton
+                                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                            >
+                                <InfoIcon />
+                            </IconButton>
+                        }
+                    />
+                </ImageListItem>
 
-        <ImageListItem >
-            <img className="imgListItem" src={`${imgUrl}/${babyname}.png`} />
-            <ImageListItemBar
-                title={babyname}
-                actionIcon={
-                    <IconButton
-                        sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                    >
-                        <InfoIcon />
-                    </IconButton>
-                }
-            />
-        </ImageListItem>
-
-
-        <ChatRoom addressee={location.state.addressee} />
+                <ChatRoom addressee={location.state.addressee} />
+            </div>
+        </div>
     </>)
 };
+
+
+
+
+
+
+
+
+

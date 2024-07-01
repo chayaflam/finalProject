@@ -43,3 +43,24 @@ button img {
     border-radius: 10px;
     margin-bottom: 1rem;
 }
+
+
+.children-container {
+    width: 10%; /* Set the width to 10% of the page width */
+    display: flex;
+    flex-direction: column;
+}
+
+.baby-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust spacing between each baby row */
+}
+
+.image-circle {
+    margin-right: 10px; /* Adjust spacing between image and name */
+}
+
+.baby-name {
+    font-size: 16px;
+}

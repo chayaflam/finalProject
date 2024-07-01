@@ -26,7 +26,6 @@ const SendMessage = ({ socket, username, room }) => {
     console.log(message)
     if (message !== '') {
       const createdtime = new Date().toISOString().slice(0, 19).replace('T', ' ')
-      console.log(room)
       console.log(createdtime)
       socket.emit('send_message', { username, room, message, createdtime });
       setMessage('');

@@ -8,17 +8,17 @@ export class AuthController {
             const result = await passwordService.login(req.body);
             console.log("resultLogin " + result)
             if (!result) throw new Error("No elements found");
-            console.log("8888888888888")
-            console.log("token",result.token)
-           return res.cookie("token", result.token, {
-                httpOnly: true,
-                secure: true,
-               }).status(200).json({ result: result.resultItem, token: result.token });
+           
+           
+        //    return res.cookie("jwt", result.token, {
+        //         httpOnly: true,
+        //         credentials: 'include',
+        //         secure: true,
+        //         domain: "localhost:8080"
+        //        }).status(200).json({ result: result.resultItem, token: result.token });
                
-            //res.cookie('token', result.token).json({ result: result.resultItem, token: result.token });
-            //  return res.status(200).json({ result: result.resultItem, token: result.token });
-
-            //return res.status(404).json({ status: 404 ,massage});
+           // res.cookie('token', result.token).json({ result: result.resultItem, token: result.token });
+             return res.status(200).json({ result: result.resultItem, token: result.token })
 
         }
         catch (ex) {
