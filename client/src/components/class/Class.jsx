@@ -7,13 +7,13 @@ import Teacher from "../teacher/Teacher";
 
 export default function Class() {
     const URL = "http://localhost:8080"
-    const location =useLocation()
+    const location = useLocation()
     return (<>
 
 
         <div className="container">
             <div className="teacher">
-            <Teacher/>
+                <Teacher />
             </div>
             <div className="class">
                 <ChatRoom addressee={location.state.addressee} />

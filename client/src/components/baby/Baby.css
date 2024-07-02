@@ -8,7 +8,7 @@
 
 .imgListItem{
     height: 15% !important;
-    width: 25% !important;
+    width: 250px !important;
 }
     
 
@@ -23,4 +23,21 @@
 .baby {
     flex: 2;
     text-align: center;
+}
+.css-wb57ya-MuiFormControl-root-MuiTextField-root {
+    margin: 0 30px 0 30px;
+    width: 80%;
+}
+
+.css-l086p4-MuiImageListItem-root {
+    display: block;
+    position: relative;
+    width: 250px;
+    margin-bottom: 10px;
+}
+.css-l086p4-MuiImageListItem-root .MuiImageListItem-img {
+    object-fit: cover;
+    display: block;
+    width: 250px !important;
+    border-radius: 5px 5px 5px 0;
 }

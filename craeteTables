@@ -90,3 +90,4 @@ ALTER TABLE `finalprojectdb`.`child`
 CHANGE COLUMN `nurseyClassId` `nurseryClassId` INT(11) NOT NULL ;
 
 INSERT INTO `finalprojectdb`.`child` (`childId`, `childName`, `nurseryClassId`, `parentId`) VALUES ('3', 'Dan', '2', '4');
+ALTER TABLE finalprojectdb.messages CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin

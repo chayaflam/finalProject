@@ -52,7 +52,8 @@ io.on("connection", (socket) => {
     socket.on('send_message', async (data) => {
         try {
             const { username, room, message, createdtime } = data;
-            console.log(Object.keys(data) + "💜💙💚💛🧡")
+
+            console.log(message )
             const newData = { senderName: username, message: message, date: createdtime }
             io.in(room).emit('receive_message', [newData]); // Send to all users in room, including sender
             const queryChildren = postQuery("messages");

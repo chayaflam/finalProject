@@ -9,7 +9,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { getFetchRequest, postFetchRequest } from "../fetch";
 import Cookies from 'js-cookie';
-import kidder from '../../../public/img/kidder.jpg'
+import kidder from '../../../public/img/Kidder.jpg'
 
 import './Login.css'
 const URL = "http://localhost:8080"

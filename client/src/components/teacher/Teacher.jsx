@@ -129,7 +129,7 @@ export default function Teacher() {
         setRoom(user.id);
         joinPublicRoom();
     }}>
-        <span className="baby-name">all class</span>
+        <span className="allClass">All Class</span>
     </div>
 </div>
                   </div>

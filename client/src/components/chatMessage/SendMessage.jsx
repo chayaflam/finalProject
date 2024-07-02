@@ -15,20 +15,22 @@ import { Image } from 'primereact/image';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import { InputText } from 'primereact/inputtext';
 import "./SendMessages.css"
+import { Form } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 const SendMessage = ({ socket, username, room }) => {
 
   const imgUrl = '../../../public/img';
   const [user, setUser] = useContext(UserContext);
-  const [message, setMessage] = useState('');
+  //const [message, setMessage] = useState('');
   const enable = user.status == "teacher" ? true : false;
-
-  const sendMessage = () => {
-    console.log(message)
-    if (message !== '') {
+  const { register, handleSubmit } =useForm()
+  const sendMessage = (data) => {
+    console.log(data.message)
+    let message=data.message;
+    if (data.message !== '') {
       const createdtime = new Date().toISOString().slice(0, 19).replace('T', ' ')
       console.log(createdtime)
       socket.emit('send_message', { username, room, message, createdtime });
-      setMessage('');
     }
   };
 
@@ -81,15 +83,11 @@ const SendMessage = ({ socket, username, room }) => {
 
       </> */}
 
-      {/* <Tooltip target=".tooltip-button" autoHide={false}>
-        <div className="flex align-items-center">
-          <Button type="button" className="p-button-rounded p-button-success ml-2"><img src={diaper}/></Button>
-          <Button type="button"className="p-button-rounded p-button-danger ml-2"><img src={diaper}/></Button>
-        </div>
-      </Tooltip>
-      <input className="tooltip-button" type="text"  /> */}
+ 
+   
       <div className='sendMessage'>
-        <Tooltip target=".tooltip-button" autoHide={false}>
+        {/* input text  */}
+        {/* <Tooltip target=".tooltip-button" autoHide={false}>
           <div className="flex align-items-center">
             <Image src={diaper} className="daiper p-button-rounded p-button-success ml-2 " onClick={() => handleButtonClick("diaper")}>
 
@@ -101,11 +99,20 @@ const SendMessage = ({ socket, username, room }) => {
 
             </Image>
           </div>
-        </Tooltip>
-        <InputText placeholder={"Send Messages"} className="tooltip-button" type="text" value={message} />
+        </Tooltip> */}
+        {/* <InputText placeholder={"Send Messages"} className="tooltip-button" type="text" value={message} /> */}
+
+        <form onSubmit={handleSubmit(sendMessage)}>
+          <input type="text" name="message" id="message" {...register("message")} />
+          <button className='btn btn-primary' type='submit'>
+            Send Message
+          </button>
+        </form>
+
+        {/* 
         <button className='btn btn-primary' onClick={sendMessage}>
-        Send Message
-      </button>
+          Send Message
+        </button> */}
       </div>
 
       {/* <input placeholder='Message...'
