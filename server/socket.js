@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import { executeQuery } from "./Service/dataBase.js";
 import { postQuery, getByParamQuery, getTodayMessagesQuery } from "./Service/queries.js";
 import { ChatMessageController } from "./Controller/chatMessageController.js";
+import { Console } from "console";
 
 
 const url = process.env.CLIENT_URL || 'http://localhost:5173'
@@ -18,6 +19,7 @@ export const io = new Server(httpServer, {
 let chatRoom = '';
 let allUsers = [];
 let chatRoomUsers = [];
+let babyClass = [];
 const CHAT_BOT = 'ChatBot';
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -38,7 +40,7 @@ io.on("connection", (socket) => {
             const dataQuary = getTodayMessagesQuery();
             result = await executeQuery(dataQuary, [room]);
             chatRoomUsers = allUsers.filter((user) => user.username === room);
-            io.to(room).emit('receive_message', result)////////////////😊😙😚
+            io.to(room).emit('receive_message', { data: result, isJoin: true })////////////////😊😙😚
             chatRoom = room;
             console.log(room)
             allUsers.push({ id: socket.id, username, room });
@@ -49,36 +51,66 @@ io.on("connection", (socket) => {
         }
     });
 
+
+    socket.on('join_public_room', async (data) => {
+        try {
+            const { username, publicRoom } = data; // Data sent from client when join_room event emitted
+            socket.join(publicRoom);
+            const createdtime = Date.now(); // Current timestamp
+            const dataQuary = getTodayMessagesQuery();
+            result = await executeQuery(dataQuary, [publicRoom]);
+            const classQuery = getByParamQuery('child', 'nurseryClassId');
+            babyClass = await executeQuery(classQuery, [publicRoom]);
+            babyClass.map((baby) => {
+                socket.join(baby.childId);
+                io.to(baby.childId).emit('receive_message', { data: result, isJoin: true })
+            })
+        } catch (ex) {
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+        }
+    });
+
     socket.on('send_message', async (data) => {
         try {
             const { username, room, message, createdtime } = data;
-
-            console.log(message )
+            console.log(message)
+            console.log("room🍕🍕🍕🍕 " + room)
             const newData = { senderName: username, message: message, date: createdtime }
-            io.in(room).emit('receive_message', [newData]); // Send to all users in room, including sender
+            io.in(room).emit('receive_message', { data: [newData], isJoin: false }); // Send to all users in room, including sender
             const queryChildren = postQuery("messages");
             result = await executeQuery(queryChildren, [username, room, message, createdtime]);
-            //emit????.
         } catch (ex) {
             const err = {}
             err.statusCode = 500;
             err.message = ex;
         }
 
-        socket.on('send_message_to_group', async (data) => {
-            try {
-                const { message, room, createdtime } = data;
-                console.log(room + "💗💗💓💕")
-                io.in(room).emit('receive_message', data);
-                const queryClass = postQuery("messages");
-                result = await executeQuery(queryClass, ["ruth", room, message, createdtime]);
-            } catch (ex) {
-                const err = {}
-                err.statusCode = 500;
-                err.message = ex;
-            }
+     
 
-        });
+    });
+    socket.on('send_message_to_class', async (data) => {
+        console.log("👨‍⚕️👷‍♂️🕵️‍♂️")
+        try {
+            const { username, room, message, createdtime } = data;
+            const newData = { senderName: "all class", message: message, date: createdtime }
+            const classQuery = getByParamQuery('child', 'nurseryClassId');
+           let babyClass = await executeQuery(classQuery, [room]);
+          console.log(newData)
+            babyClass.map(baby => {
+                console.log("baby.childId  "+baby.childId)
+                let room=baby.childId
+                io.to(room).emit('receive_message', { data: [newData], isJoin: false }); // Send to all users in room, including sender
+            })
+
+            const queryChildren = postQuery("messages");
+            result = await executeQuery(queryChildren, [username, room, message, createdtime]);
+        } catch (ex) {
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+        }
 
     });
     //-----------------------------------------------------------------------------------------------------------------

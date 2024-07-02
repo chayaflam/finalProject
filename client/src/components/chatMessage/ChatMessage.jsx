@@ -18,13 +18,17 @@ function ChatMessage({ socket, username, room }) {
   const [user, setUser] = useContext(UserContext)
   const [messagesRecieved, setMessagesReceived] = useState([]);
 
+  useEffect(() => {
+    socket.emit('join_room', { username, room });
 
-  // Runs whenever a socket event is recieved from the server
+    
+  }, []);
+ 
   useEffect(() => {
     socket.on('receive_message', (data) => {
-      console.log(data);
-     data.length > 1 && setMessagesReceived([]);
-      data.map(msg => {
+      console.log(data.data);
+      data.isJoin && setMessagesReceived([]);
+      data.data.map(msg => {
         setMessagesReceived((state) => [
           ...state, {
             message: msg.message,
@@ -37,12 +41,6 @@ function ChatMessage({ socket, username, room }) {
     return () => socket.off('receive_message');
   }, [socket]);
 
-  useEffect(() => {
-    socket.emit('join_room', { username, room });
-    setMessagesReceived([]);
-  }, []);
-
-  
   // dd/mm/yyyy, hh:mm:ss
   function formatDateFromTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -65,7 +63,7 @@ function ChatMessage({ socket, username, room }) {
         </div>
       ))}
 
- 
+
     </div>
   );
 }

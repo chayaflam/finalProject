@@ -27,6 +27,7 @@ export default function Teacher() {
       const [user, setUser] = useContext(UserContext)
       const [childrenList, setChildrenList] = useState([]);
       const [room, setRoom] = useState('');
+      const [publicRoom, setPublicRoom] = useState('');
       const [baby, setBaby] = useState();
       const location = useLocation()
       const token = Cookies.get('token');
@@ -39,11 +40,12 @@ export default function Teacher() {
                   try {
                         getFetchRequest(user, URL, 'child/teacher', token, [user.id])
                               .then(data => {
+                                    console.log(data)
                                     setChildrenList(data);
                               })
                         getFetchRequest(user, URL, 'class/teacher', token, [user.id])
                               .then(data => {
-                                    setRoom(data[0].idNurseryclass)
+                                    setPublicRoom(data[0].idNurseryclass)
                               })
                   } catch {
                         alert("error")
@@ -61,25 +63,27 @@ export default function Teacher() {
                   socket.emit('join_room', { username, room });
             }
              if(isBabyRoute||isChatAllRoute)
-            navigate(`../baby/${baby.childName}`, { state: { addressee: baby.childId } }) 
+            navigate(`../baby/${baby.childName}`, { state: { baby: baby } }) 
       //        const baseUrl = window.location.origin + window.location.pathname;
       //        baseUrl=baseUrl.replace(`baby`,`baby/${baby.childName}`);
       //        console.log(baseUrl) // Get the base URL
       //       history.push(baseUrl + '/new-segment'); // Clear the end and add a new segment
       //       }
-      else
-            navigate(`./baby/${baby.childName}`, { state: { addressee: baby.childId } });
+      else{
+            //navigate(`./baby/${baby.childName}`, { state: { addressee: baby.childId } });
+            navigate(`./baby/${baby.childName}`, { state: { baby: baby } });
+      }
       };
 
       const joinPublicRoom = () => {
             if (user.username !== '') {
                   let username = user.username;
-                  socket.emit('join_room', { username, room });
+                  socket.emit('join_public_room', { username, publicRoom });
             }
              if(isBabyRoute||isChatAllRoute)
-                  navigate(`../chatAll`, { state: { addressee: room } })
+                  navigate(`../chatAll`, { state: { addressee: publicRoom, isPublicRoom:true } })
             else
-                   navigate(`./chatAll`, { state: { addressee: room } });
+                   navigate(`./chatAll`, { state: { addressee: publicRoom ,isPublicRoom:true} });
       };
   
       // const handleChange = (event) => {
@@ -132,7 +136,7 @@ export default function Teacher() {
         <span className="allClass">All Class</span>
     </div>
 </div>
-                  </div>
+ </div>
            
 
 

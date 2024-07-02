@@ -36,8 +36,10 @@ export default function Parent() {
 
 
       const joinRoom = (baby, room) => {
+            console.log(baby.nurseryClassId)
             if (user.username !== '') {
                   let username = user.username;
+                  let classId = baby.nurseryClassId;
                   socket.emit('join_room', { username, room });
 
             }

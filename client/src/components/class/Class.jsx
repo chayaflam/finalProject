@@ -16,7 +16,7 @@ export default function Class() {
                 <Teacher />
             </div>
             <div className="class">
-                <ChatRoom addressee={location.state.addressee} />
+                <ChatRoom addressee={location.state.addressee} isPublicRoom={location.state.isPublicRoom} />
             </div>
         </div>
     </>)

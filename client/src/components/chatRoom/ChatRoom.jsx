@@ -29,7 +29,7 @@ function ChatRoom(props) {
     return (
         <div >
             <div>
-                <SendMessage socket={socket} username={user.username} room={props.addressee} />
+                <SendMessage socket={socket} username={user.username} room={props.addressee} isPublicRoom={props.isPublicRoom}/>
                 <ChatMessage socket={socket} username={user.username} room={props.addressee} />
             </div>
         </div>

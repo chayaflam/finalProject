@@ -17,20 +17,27 @@ import { InputText } from 'primereact/inputtext';
 import "./SendMessages.css"
 import { Form } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-const SendMessage = ({ socket, username, room }) => {
-
+const SendMessage = ({ socket, username, room, isPublicRoom }) => {
+console.log(isPublicRoom)
   const imgUrl = '../../../public/img';
   const [user, setUser] = useContext(UserContext);
   //const [message, setMessage] = useState('');
   const enable = user.status == "teacher" ? true : false;
-  const { register, handleSubmit } =useForm()
+  const { register, handleSubmit } = useForm()
   const sendMessage = (data) => {
     console.log(data.message)
-    let message=data.message;
+    let message = data.message;
     if (data.message !== '') {
       const createdtime = new Date().toISOString().slice(0, 19).replace('T', ' ')
       console.log(createdtime)
-      socket.emit('send_message', { username, room, message, createdtime });
+      //לבדוק לאיזה הקשבה לשלוח לפי כיתה או ילד
+      if (isPublicRoom){
+        console.log("👩‍🌾👨‍🌾")
+        socket.emit('send_message_to_class', { username, room, message, createdtime })
+
+      }
+      else
+        socket.emit('send_message', { username, room, message, createdtime });
     }
   };
 
@@ -83,8 +90,8 @@ const SendMessage = ({ socket, username, room }) => {
 
       </> */}
 
- 
-   
+
+
       <div className='sendMessage'>
         {/* input text  */}
         {/* <Tooltip target=".tooltip-button" autoHide={false}>

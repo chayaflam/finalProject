@@ -21,6 +21,8 @@ function getTodayMessagesQuery(){
     FROM finalProjectDb.messages
     WHERE DATE(date) =curdate() and TIME(date)<=curtime() and babyId=?;`   
 }
+
+
 export {
     getQuery,getByParamQuery,postQuery,getChildrenByTeacherId,getTodayMessagesQuery
 }

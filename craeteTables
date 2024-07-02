@@ -91,3 +91,37 @@ CHANGE COLUMN `nurseyClassId` `nurseryClassId` INT(11) NOT NULL ;
 
 INSERT INTO `finalprojectdb`.`child` (`childId`, `childName`, `nurseryClassId`, `parentId`) VALUES ('3', 'Dan', '2', '4');
 ALTER TABLE finalprojectdb.messages CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin
+
+
+
+ALTER TABLE `finalprojectdb`.`child` 
+ADD COLUMN `fatherCell` VARCHAR(45) NULL AFTER `parentId`,
+ADD COLUMN `matherCell` VARCHAR(45) NULL AFTER `fatherCell`,
+ADD COLUMN `homeCell` VARCHAR(45) NULL AFTER `matherCell`,
+ADD COLUMN `address` VARCHAR(45) NULL AFTER `homeCell`,
+ADD COLUMN `allergies` VARCHAR(45) NULL AFTER `address`,
+ADD COLUMN `medicaProblems` VARCHAR(45) NULL AFTER `allergies`,
+ADD COLUMN `maritalStatus` VARCHAR(45) NULL AFTER `medicaProblems`,
+ADD COLUMN `dateOfBirth` VARCHAR(45) NOT NULL AFTER `maritalStatus`,
+ADD UNIQUE INDEX `father'sPhone_UNIQUE` (`fatherCell` ASC),
+ADD UNIQUE INDEX `mather'sPhone_UNIQUE` (`matherCell` ASC),
+ADD UNIQUE INDEX `home'sPhone_UNIQUE` (`homeCell` ASC);
+;
+
+
+UPDATE `finalprojectdb`.`child` SET `fatherCell` = '054789654', `matherCell` = '05896587', `homeCell` = '02547896', `allergies` = 'Milk', `medicaProblems` = 'asthma', `dateOfBirth` = '' WHERE (`childId` = '3');
+UPDATE `finalprojectdb`.`child` SET `fatherCell` = '0569874563', `matherCell` = '05478965', `homeCell` = '025178596', `allergies` = 'Milk' WHERE (`childId` = '12');
+UPDATE `finalprojectdb`.`child` SET `fatherCell` = '', `matherCell` = '02587469', `homeCell` = '054789635', `allergies` = 'peanut', `maritalStatus` = 'orphan' WHERE (`childId` = '34');
+
+
+ALTER TABLE `finalprojectdb`.`child` 
+CHANGE COLUMN `matherCell` `motherCell` VARCHAR(45) NULL DEFAULT NULL ;
+
+
+ALTER TABLE `finalprojectdb`.`child` 
+CHANGE COLUMN `medicaProblems` `medicalProblems` VARCHAR(45) NULL DEFAULT NULL ;
+
+ALTER TABLE `finalprojectdb`.`child` 
+DROP COLUMN `dateOfBirth`;
+ALTER TABLE `finalprojectdb`.`child` 
+ADD COLUMN `dateOfBirth` DATE NULL AFTER `maritalStatus`;

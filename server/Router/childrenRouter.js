@@ -6,7 +6,6 @@ const childrenRouter = express.Router();
 const childrenController = new ChildrenController()
 
 childrenRouter.get("/teacher/:id",authMiddleWare,childrenController.getChildrenByTeacher)
-
 childrenRouter.get("/parent/:id",authMiddleWare,childrenController.getChildrenByParent)
 
 export {

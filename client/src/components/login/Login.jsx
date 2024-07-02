@@ -22,16 +22,23 @@ export default function Login() {
     const navigate = useNavigate();
 
     useEffect(() => {
-
         if (user) {
-            try {
-                getFetchRequest(user, URL, 'user', [user.username])
-                if (json) navigate(`/users/${user.username}`)
-            } catch {
-                alert("Unauthorized user")
-            }
+            // try {
+            //     getFetchRequest(user, URL, 'user', [user.username])
+            //     if (json) navigate(`/users/${user.username}`)
+            // } catch {
+            //     alert("Unauthorized user")
+            // }
+            const cookies = Object.keys(Cookies.get());
+            cookies.forEach(cookie => {
+                Cookies.remove(cookie);
+            });
+            setUser(null);
+            navigate('/');
         }
+        else{
         navigate('/login')
+    }
     }, [])
 
     async function loginHandleSubmit(data) {
