@@ -36,12 +36,12 @@ export default function Teacher() {
 
       useEffect(() => {
             if (user) {
-                  try {
-                        getFetchRequest(user, URL, 'child/teacher', token, [user.id])
+             try {
+              getFetchRequest(user, URL, 'child/teacher',  [user.id])
                               .then(data => {
                                     setChildrenList(data);
                               })
-                        getFetchRequest(user, URL, 'class/teacher', token, [user.id])
+                        getFetchRequest(user, URL, 'class/teacher',  [user.id])
                               .then(data => {
                                     setPublicRoom(data[0].idNurseryclass)
                               })

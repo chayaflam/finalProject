@@ -5,6 +5,13 @@ const authRouter = express.Router();
 const authController = new AuthController()
 
 authRouter.post("/login", authController.getAuthLogin)
+authRouter.get("/test", (req, res, next) => {
+    return res.cookie('token', "uiujg",
+        { secure: false, httpOnly: true }
+    ).send("ok")
+
+})
+
 
 export {
     authRouter

@@ -7,8 +7,7 @@ export class ChildrenController {
         try {
             const childrenService = new ChildrenService();
             const resultItems = await childrenService.getChildrenByTeacherId(req.params["id"])
-            console.log(Object.values(resultItems))
-            return res.status(200).json(resultItems);
+            return res.json(resultItems);
         }
         catch (ex) {
             const err = {}
@@ -22,8 +21,7 @@ export class ChildrenController {
         try {
             const childrenService = new ChildrenService();
             const resultItems = await childrenService.getChildren({ data: req.params["id"], condition: "parentId" })
-            console.log(Object.values(resultItems))
-            return res.status(200).json(resultItems);
+            return res.json(resultItems);
         }
         catch (ex) {
             const err = {}

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState,useRef } from "react";
 import { useForm } from 'react-hook-form';
 import ChatRoom from "../chatRoom/ChatRoom";
 import { useLocation, useParams } from "react-router-dom";
@@ -11,7 +11,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import "./Baby.css"
 import Cookies from 'js-cookie';
 import { UserContext } from "../../main";
-import { getFetchRequest } from "../fetch";
+import { getFetchRequest, postFetchRequest } from "../fetch";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Teacher from "../teacher/Teacher";
@@ -24,7 +24,6 @@ export default function Baby() {
     const location = useLocation();
     const [user, setUser] = useContext(UserContext)
     let { babyname } = useParams();
-    console.log(babyname)
     const token = Cookies.get('token');
     const childId = location.state.baby.childId;
     const baby = location.state.baby;
@@ -32,66 +31,79 @@ export default function Baby() {
     const [displayChart, setDisplayChat] = useState(false);
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
-
+    const SizeOfLabels = 7;
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    const yy=[];
+    const xx = [];
     useEffect(() => {
-        const data = {
-            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-            datasets: [
-                {
-                    label: 'cc',
-                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-                    borderColor: documentStyle.getPropertyValue('--blue-500'),
-                    data: feedingDataPerWeek()
-                }
-            ]
-        };
-        const options = {
-            maintainAspectRatio: false,
-            aspectRatio: 0.8,
-            plugins: {
-                legend: {
-                    labels: {
-                        fontColor: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary,
-                        font: {
-                            weight: 500
-                        }
-                    },
-                    grid: {
-                        display: false,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                }
-            }
-        };
-
-        setChartData(data);
-        setChartOptions(options);
+        feedingDataPerWeek()
     }, []);
 
-    const feedingDataPerWeek = () => {
-        return []
-    }
+    async function feedingDataPerWeek() {
 
+       await getFetchRequest(user, URL, "messages", [childId])
+            .then(data => {
+                data.map((day) => {
+                    let totalNumber=day.total_number;
+                    let date=day.day;
+                    yy.push(totalNumber)
+                    xx.push(date)
+                })
+            })
+              const  data = {
+                    labels: xx,
+                    datasets: [
+                        {
+                            label: 'cc',
+                            backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                            borderColor: documentStyle.getPropertyValue('--blue-500'),
+                            data: yy
+                        }
+                    ]
+                };
+                console.log(data)
+                
+              const  options = {
+                    maintainAspectRatio: false,
+                    aspectRatio: 0.8,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                fontColor: textColor
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: textColorSecondary,
+                                font: {
+                                    weight: 500
+                                }
+                            },
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: textColorSecondary
+                            },
+                            grid: {
+                                color: surfaceBorder,
+                                drawBorder: false
+                            }
+                        }
+                    }
+                };
+
+                setChartData(data);
+                setChartOptions(options);
+    }
     const displayDateOfBirth = (date) => {
         var data = new Date(date),
             month = '' + (data.getMonth() + 1),

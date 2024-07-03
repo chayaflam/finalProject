@@ -23,7 +23,7 @@ export default function Parent() {
       useEffect(() => {
             if (user) {
                   try {
-                        getFetchRequest(user, URL, 'child/parent', token, [user.id])
+                        getFetchRequest(user, URL, 'child/parent', [user.id])
                               .then(data => {
                                     setBaby(data);
                               })

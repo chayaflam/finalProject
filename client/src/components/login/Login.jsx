@@ -36,22 +36,21 @@ export default function Login() {
             setUser(null);
             navigate('/');
         }
-        else{
-        navigate('/login')
-    }
+        else {
+            navigate('/login')
+        }
     }, [])
 
     async function loginHandleSubmit(data) {
 
         await postFetchRequest(URL, 'auth/login', [data], (dataFromServer) => {
+            console.log(dataFromServer)
             setUser({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, name: dataFromServer.result.name });
             Cookies.set('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, name: dataFromServer.result.name }));
-            Cookies.set('token', dataFromServer.token);
+            //  Cookies.set('token', dataFromServer.token);
             localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, token: dataFromServer.token }))
             navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
         }, (status) => alert("Error: " + status));
-
-
     }
 
 

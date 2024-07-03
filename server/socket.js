@@ -2,7 +2,6 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { executeQuery } from "./Service/dataBase.js";
 import { postQuery, getByParamQuery, getTodayMessagesQuery } from "./Service/queries.js";
-import { ChatMessageController } from "./Controller/chatMessageController.js";
 
 
 const url = process.env.CLIENT_URL || 'http://localhost:5173'
@@ -22,7 +21,6 @@ let babyClass = [];
 //---------------------------------------------------------------------------------------------------------------------
 
 io.on("connection", (socket) => {
-    let chatMessageController = new ChatMessageController
     let result
 
     socket.on('join_room', async (data) => {
