@@ -10,7 +10,6 @@ import { Button } from "primereact/button";
 import { Image } from 'primereact/image';
 import { IoIosSearch } from "react-icons/io";
 import { FloatLabel } from "primereact/floatlabel";
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -40,7 +39,6 @@ export default function Teacher() {
                   try {
                         getFetchRequest(user, URL, 'child/teacher', token, [user.id])
                               .then(data => {
-                                    console.log(data)
                                     setChildrenList(data);
                               })
                         getFetchRequest(user, URL, 'class/teacher', token, [user.id])

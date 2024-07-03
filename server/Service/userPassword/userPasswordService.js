@@ -12,11 +12,13 @@ export class UserPasswordService {
             const queryUserPassword = getPasswordQuery();
             const resultCheckPassword = await executeQuery(queryUserPassword, Object.values({ userId: resultItem.id, password: user.userPassword }));
         
+           
             if (resultCheckPassword) {
                 const payload = {
                     id: resultItem.id,
                     email: resultItem.email
                 };
+                
                 return {
                     resultItem: resultItem,
                     token: jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' })

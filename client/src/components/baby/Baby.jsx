@@ -16,6 +16,7 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Teacher from "../teacher/Teacher";
 import { child } from "firebase/database";
+import { Chart } from 'primereact/chart';
 const imgUrl = '../../../public/img'
 
 export default function Baby() {
@@ -28,10 +29,82 @@ export default function Baby() {
     const childId = location.state.baby.childId;
     const baby = location.state.baby;
     const [visibleRight, setVisibleRight] = useState(false);
+    const [displayChart, setDisplayChat] = useState(false);
+    const [chartData, setChartData] = useState({});
+    const [chartOptions, setChartOptions] = useState({});
 
-   
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    useEffect(() => {
+        const data = {
+            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            datasets: [
+                {
+                    label: 'cc',
+                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                    borderColor: documentStyle.getPropertyValue('--blue-500'),
+                    data: feedingDataPerWeek()
+                }
+            ]
+        };
+        const options = {
+            maintainAspectRatio: false,
+            aspectRatio: 0.8,
+            plugins: {
+                legend: {
+                    labels: {
+                        fontColor: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColorSecondary,
+                        font: {
+                            weight: 500
+                        }
+                    },
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                }
+            }
+        };
 
- 
+        setChartData(data);
+        setChartOptions(options);
+    }, []);
+
+    const feedingDataPerWeek = () => {
+        return []
+    }
+
+    const displayDateOfBirth = (date) => {
+        var data = new Date(date),
+            month = '' + (data.getMonth() + 1),
+            day = '' + data.getDate(),
+            year = data.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
 
     return (<>
         {/* <img className="baby" src={`${imgUrl}/${babyname}.png `} alt={babyname} />
@@ -55,24 +128,49 @@ export default function Baby() {
                             </IconButton>
                         }
                     /></ImageListItem>
-                <Sidebar  visible={visibleRight} position="right" onHide={() => setVisibleRight(false)}>
-                    <h2>{baby.childId}</h2>
-                    <h4>{baby.class}</h4>               
-                    <h4>{baby.fatherCell}</h4>               
-                    <h4>{baby.motherCell}</h4>               
-                    <h4>{baby.homeCell}</h4>               
-                    <h4>{baby.address}</h4>               
-                    <h4>{baby.medicalProblem}</h4>               
-                    <h4>{baby.maritalStatus}</h4>               
-                    <h4>{baby.dateOfBirth}</h4>               
+                <Sidebar visible={visibleRight} position="right" onHide={() => setVisibleRight(false)}>
+                    <h2>{baby.childName}</h2>
+                    <h3>Class<br /></h3> <h4>{baby.nurseryClassId}</h4>
+                    <h3>Address<br /></h3> <h4> {baby.address}</h4>
+                    <h3>FatherCell<br /> </h3> <h4>{baby.fatherCell}</h4>
+                    <h3>MotherCell<br /> </h3> <h4>{baby.motherCell}</h4>
+                    <h3>HomeCell<br /></h3> <h4> {baby.homeCell}</h4>
+                    <h3>Allergies<br /></h3> <h4> {baby.allergies ? baby.allergies : "no"}</h4>
+                    <h3>Medical problem<br /></h3> <h4> {baby.medicalProblem ? baby.medicalProblem : "no"}</h4>
+                    <h3>Marital status<br /></h3> <h4> {baby.maritalStatus ? baby.maritalStatus : "regular"}</h4>
+                    <h3>Date of birth<br /> </h3> <h4>{displayDateOfBirth(baby.dateOfBirth)}</h4>
 
                 </Sidebar>
-                <ChatRoom addressee={childId}  />
+                {!displayChart && <ChatRoom addressee={childId} />}
+                {displayChart && <>
 
+                    <div>
+                        <h1>Weekly eating monitoring</h1>
+                        <div className="card">
+                            <Chart type="bar" data={chartData} options={chartOptions} />
+                        </div>
+                    </div>
+                </>}
             </div>
+            {!displayChart && <button onClick={() => setDisplayChat(true)}>chart</button>}
+            {displayChart && <button onClick={() => setDisplayChat(false)}>close</button>}
         </div>
     </>)
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -46,7 +46,7 @@ function ChatMessage({ socket, username, room }) {
     const date = new Date(timestamp);
     return date.toLocaleString();
   }
-  console.log(messagesRecieved)
+
   return (
     <div >
 

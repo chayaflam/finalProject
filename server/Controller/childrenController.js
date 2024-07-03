@@ -5,10 +5,8 @@ export class ChildrenController {
 
     async getChildrenByTeacher(req, res, next) {
         try {
-            console.log(req.params["id"])
             const childrenService = new ChildrenService();
             const resultItems = await childrenService.getChildrenByTeacherId(req.params["id"])
-      
             console.log(Object.values(resultItems))
             return res.status(200).json(resultItems);
         }

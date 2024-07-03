@@ -18,16 +18,7 @@ button {
 .logOut{
     width: 300px;
 }
-button{
-    border-radius: 100%;
-    border-width: 4px;
-    border-color: rgb(37, 191, 88);
-    overflow: hidden;
-    background-color: rgb(255, 255, 255); /* Light green background color */
-    margin: 10px;
-    transition: transform 0.3s; /* Smooth transition effect */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Add a subtle shadow effect */
-}
+
 
 button:hover {
     transform: scale(1.1); /* Make the image slightly bigger on hover */

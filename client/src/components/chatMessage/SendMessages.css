@@ -1,17 +1,33 @@
+.imageButtom{
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px;
+    text-indent: -9999px;
+    border-radius: 50%;
+    margin: 10px;
+}
 .sleep{
-background-image: url( '../../../public/img/sleep.png');
-background-size: cover !important;
+    background-image: url(/public/img/sleep.png);
+   
 }
 .food{
-    background-image: url(  '../../../public/img/sleep.png');
-    background-size: cover;
+    background-image: url(/public/img/food.png);
+    
 }
 .diaper{
-    background-image: url( '../../../public/img/diaper.png');
-    background-size: cover;
+    background-image: url(/public/img/diaper.png);
+   
 }
 .sendMessage{
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.iconBottle{
+    width:  50px;
+    height:  100%;
+}
+.css-70qvj9{
+    margin: 20px;
 }

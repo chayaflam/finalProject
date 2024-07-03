@@ -9,9 +9,7 @@ export class ClassController {
             const classService = new ClassService();
             const resultItems = await classService.getIdClass({ data: req.params["id"], condition: "teacherId" })
             console.log(Object.values(resultItems))
-            console.log("👱‍♂️👸👩‍🦱👨‍🦱👱‍♀️🤴👨‍🦰👩‍🦰"+resultItems[0].id)
             return res.status(200).json(resultItems);
-
         }
         catch (ex) {
             const err = {}

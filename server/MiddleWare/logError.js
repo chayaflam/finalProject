@@ -7,7 +7,6 @@ export const logErrors = (error, req, res, next) => {
 }
 
 function errMessageForClient(statusCode) {
-    console.log("🎟🎨🎟🎨" + statusCode)
     switch (statusCode) {
         case 400:
             return 'Invalid request parameters';

@@ -4,35 +4,35 @@ import { UserContext } from "../../main";
 import diaper from '../../../public/img/diaper.png'
 import sleep from '../../../public/img/sleep.png'
 import food from '../../../public/img/food.png'
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import Slider from '@mui/material/Slider';
-import Input from '@mui/material/Input';
-import { Tooltip } from 'primereact/tooltip';
-import { Image } from 'primereact/image';
 import VolumeUp from '@mui/icons-material/VolumeUp';
-import { InputText } from 'primereact/inputtext';
 import "./SendMessages.css"
-import { Form } from 'react-router-dom';
+import { GiBabyBottle } from "react-icons/gi";
 import { useForm } from 'react-hook-form';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import Slider from '@mui/material/Slider';
+import Box from '@mui/material/Box'
+import { Icon } from '@mui/material';
+import { useParams } from "react-router-dom";
 const SendMessage = ({ socket, username, room, isPublicRoom }) => {
-console.log(isPublicRoom)
+  console.log(isPublicRoom)
   const imgUrl = '../../../public/img';
   const [user, setUser] = useContext(UserContext);
   //const [message, setMessage] = useState('');
   const enable = user.status == "teacher" ? true : false;
   const { register, handleSubmit } = useForm()
+  const [visible, setVisible] = useState(false);
+  const [sliderValue, setSliderValue] = useState(30);
+  let { babyname } = useParams();
   const sendMessage = (data) => {
-    console.log(data.message)
     let message = data.message;
     if (data.message !== '') {
       const createdtime = new Date().toISOString().slice(0, 19).replace('T', ' ')
-      console.log(createdtime)
-      //לבדוק לאיזה הקשבה לשלוח לפי כיתה או ילד
-      if (isPublicRoom){
-        console.log("👩‍🌾👨‍🌾")
+
+      if (isPublicRoom) {
+        console.log("isPublicRoom")
         socket.emit('send_message_to_class', { username, room, message, createdtime })
 
       }
@@ -42,99 +42,55 @@ console.log(isPublicRoom)
   };
 
 
-  const handleButtonClick = (imageSrc) => {
-    setMessage(imageSrc);
-  };
+  const footerContent = (
+    <div>
+      <Button
+        label="Send"
+        icon="pi pi-send"
+        onClick={() => {
+          setVisible(false);
+          sendMessage({ message: `food-${sliderValue}cc`})
+        }}
+        className="p-button-text"
+      />
 
-
+    </div>
+  );
 
   return (
     <div >
-      {/* <>
-        <div className="chat-room">
-          {enable && <button onClick={() => sendMessage({ babyId: baby.childId, msg: "diaper" })}><img src={diaper} /></button>}
-          {enable && <button onClick={() => sendMessage({ babyId: baby.childId, msg: "sleep" })}><img src={sleep} /></button>}
-          <Box sx={{ width: 250 }}>
-            <Typography id="input-slider" gutterBottom />
-
-            <Grid container spacing={2} alignItems="center">
-              <Grid item>
-                <img src={food} />
-              </Grid>
-              <Grid item xs>
-                <Slider
-                  value={typeof value === 'number' ? value : 0}
-                  onChange={handleSliderChange}
-                  max={250}
-                  aria-labelledby="input-slider"
-                />
-              </Grid>
-              <Grid item>
-                <Input
-                  value={value}
-                  size="small"
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  inputProps={{
-                    step: 20,
-                    min: 0,
-                    max: 250,
-                    type: 'number',
-                    'aria-labelledby': 'input-slider',
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        </div>
-
-      </> */}
-
-
 
       <div className='sendMessage'>
-        {/* input text  */}
-        {/* <Tooltip target=".tooltip-button" autoHide={false}>
-          <div className="flex align-items-center">
-            <Image src={diaper} className="daiper p-button-rounded p-button-success ml-2 " onClick={() => handleButtonClick("diaper")}>
-
-            </Image>
-            <Image src={sleep} className="sleep p-button-rounded p-button-danger ml-2 " onClick={() => handleButtonClick("sleep")}>
-
-            </Image>
-            <Image src={food} className="food p-button-rounded p-button-danger ml-2 " onClick={() => handleButtonClick("food")}>
-
-            </Image>
-          </div>
-        </Tooltip> */}
-        {/* <InputText placeholder={"Send Messages"} className="tooltip-button" type="text" value={message} /> */}
 
         <form onSubmit={handleSubmit(sendMessage)}>
+          <Dialog header={`how much ${babyname} ate?`} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} >
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Slider
+                sx={{ width: 380, marginRight: 2 }}
+                aria-label="Volume"
+                defaultValue={30}
+                max={360}
+                valueLabelDisplay='auto'
+                value={sliderValue}
+                onChange={(e, value) => setSliderValue(value)}
+              />
+              <img src={food} className='iconBottle' />
+            </Box>
+            {footerContent}
+          </Dialog>
+          <button className="imageButtom sleep" onClick={() => sendMessage({ message: "sleep" })}></button>
+          <button className="imageButtom diaper" onClick={() => sendMessage({ message: "daiper" })}></button>
+          <button className="imageButtom food" onClick={() => setVisible(true)}></button>
           <input type="text" name="message" id="message" {...register("message")} />
           <button className='btn btn-primary' type='submit'>
             Send Message
           </button>
         </form>
-
-        {/* 
-        <button className='btn btn-primary' onClick={sendMessage}>
-          Send Message
-        </button> */}
       </div>
-
-      {/* <input placeholder='Message...'
-        onChange={(e) => setMessage(e.target.value)}
-        value={message} />
-      <button className='btn btn-primary' onClick={sendMessage}>
-        Send Message
-      </button> */}
     </div>
   );
 };
 
+
 export default SendMessage;
-
-
-
-
 

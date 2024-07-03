@@ -42,5 +42,11 @@
     border-radius: 5px 5px 5px 0;
 }
 .IconButton{
-    background-color:'#febe52'
+    background-color:#febe52
+}
+h3{
+    color: #fa6c9a;
+}
+h2{
+   color: #6ba2fc
 }

@@ -17,9 +17,7 @@ function getChildrenByTeacherId(data){
 }
 
 function getTodayMessagesQuery(){
- return `SELECT *
-    FROM finalProjectDb.messages
-    WHERE DATE(date) =curdate() and TIME(date)<=curtime() and babyId=?;`   
+ return `SELECT * FROM finalProjectDb.messages WHERE DATE(date) =curdate() and TIME(date)<=curtime() and( babyId=? || babyId  = (select distinct nurseryClassId from finalProjectDb.child where childId=?));`   
 }
 
 

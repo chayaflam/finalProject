@@ -40,7 +40,7 @@ export default function Parent() {
             if (user.username !== '') {
                   let username = user.username;
                   let classId = baby.nurseryClassId;
-                  socket.emit('join_room', { username, room });
+                  socket.emit('join_room', { username, room});
 
             }
             navigate(`./baby/${baby.childName}`, { state: { baby: baby } });
@@ -49,7 +49,6 @@ export default function Parent() {
       return (
             <>  <h1>hi {user.name}</h1>
                   <Button onClick={() => setVisibleRight(true)} ><CgProfile /></Button>
-
                   <Sidebar visible={visibleRight} position="right" onHide={() => setVisibleRight(false)}>
                         <h2>Right Sidebar</h2>
                         <p>
