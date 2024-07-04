@@ -4,11 +4,10 @@ import { UserContext } from './main';
 import Cookies from 'js-cookie';
 
 const withAuth = (Component) => {
+
   const AuthRoute = (props) => {
     const [user, setUser] = useContext(UserContext);
     const userFromCookie = JSON.parse(Cookies.get('user'));
-    const token = Cookies.get('token');
-    console.log(user, token);
     const usernameFromUrl = location.pathname.split('/')[2];
     if (!user || (usernameFromUrl !== userFromCookie.username)) {
       const cookies = Object.keys(Cookies.get());

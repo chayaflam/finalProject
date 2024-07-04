@@ -1,26 +1,4 @@
-// async function getFetchRequest(user, URL, tablename, params) {
-//     let dataFromServer;
-//     try {
-//      await fetch(`${URL}/${tablename}/${params[0]}`, {
-//             method: 'GET',
-//             credentials: 'include',
-//             headers: {
-//                 'Origin': 'http://localhost:8080'
-//             }
-//         }).then(response => response.json()).then(data => {
-//             dataFromServer = data
-//             return dataFromServer;
-//         }).catch(fetchError => fetchError)
-
-//     } catch (userError) {
-//         return userError
-//     }
-// }
-
-
-
-async function getFetchRequest(user, URL, tablename, params) {
-    let dataFromServer;
+async function getFetchRequest( URL, tablename, params) {
     try {
    const result=  await fetch(`${URL}/${tablename}/${params[0]}`, {
             method: 'GET',
@@ -31,12 +9,8 @@ async function getFetchRequest(user, URL, tablename, params) {
         })
         const response=await result.json();
         return response;
-        // .then(data => {
-        //     dataFromServer = data
-        //     return dataFromServer;
-        // }).catch(fetchError => fetchError)
-
     } catch (err) {
+        console.log("error🙂☺"+err)
         return err
     }
 }
@@ -61,10 +35,6 @@ async function postFetchRequest(URL, tablename, params, onReady, onError) {
         onError(err) 
     }
 }
-
-
-
-
 
 export { postFetchRequest, getFetchRequest }
 

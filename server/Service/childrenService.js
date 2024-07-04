@@ -1,6 +1,7 @@
-
 import { executeQuery } from './dataBase.js';
-import { getQuery, getByParamQuery,getChildrenByTeacherId } from './queries.js'
+import { getChildrenByTeacherId } from './queries/childrenQuery.js';
+import { getByParamQuery } from './queries/genericQuery.js';
+
 
 export class ChildrenService {
 
@@ -13,7 +14,7 @@ export class ChildrenService {
 
     async getIdClass(data) {
         console.log(data.data)
-        const queryClass = getByParamQuery("nurseryclass",data.condition);
+        const queryClass = getByParamQuery("childrenClass",data.condition);
         const result = await executeQuery(queryClass, [data.data]);
         return result[0] ? result : null;
     }
@@ -21,8 +22,6 @@ export class ChildrenService {
     async getChildrenByTeacherId(data){
         const queryClass = getChildrenByTeacherId(data);
         const result = await executeQuery(queryClass);
-        console.log( result)
         return result ? result : null;
-
     }
 }

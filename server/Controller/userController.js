@@ -1,5 +1,4 @@
-import { UserService } from '../Service/userService.js'
-import {sha256} from 'js-sha256'
+import { UserService } from '../service/userService.js'
 
 export class UserController {
 
@@ -7,7 +6,7 @@ export class UserController {
         try {
             const userService = new UserService();
             const resultItems = await userService.getUser()
-            return res.status(200).json(resultItems);
+            return res.json(resultItems);
         }
         catch (ex) {
             const err = {}

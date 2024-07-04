@@ -40,17 +40,17 @@ button img {
    
 }
 
-.baby-row {
+.child-row {
     display: flex;
     align-items: center;
-    margin-bottom: 10px; /* Adjust spacing between each baby row */
+    margin-bottom: 10px; /* Adjust spacing between each child row */
 }
 
 .image-circle {
     margin-right: 10px; /* Adjust spacing between image and name */
 }
 
-.baby-name {
+.child-name {
     font-size: 16px;
 }
 .teacher-name {
@@ -70,12 +70,12 @@ button img {
     justify-content: center; /* Center align the content vertically */
     margin-top: 20px; /* Adjust top margin for spacing */
 }
-.baby-row {
+.child-row {
    
   /*  display: flex;
-    align-items: center; /* Center the content vertically within the baby-row */
-  /*  justify-content: center; /* Center the content horizontally within the baby-row */
-  /*  margin-bottom: 10px; /* Adjust spacing between each baby row */
+    align-items: center; /* Center the content vertically within the child-row */
+  /*  justify-content: center; /* Center the content horizontally within the child-row */
+  /*  margin-bottom: 10px; /* Adjust spacing between each child row */
 }
 
 .image-circle {
@@ -104,9 +104,6 @@ button img {
     width: 80%;
     border-radius: 10px;
     border: 1px solid #e5e7eb;
-}
-.allClass{
-   
 }
 .css-wb57ya-MuiFormControl-root-MuiTextField-root {
     margin: 0 30px 0 30px;

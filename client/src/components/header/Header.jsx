@@ -1,14 +1,11 @@
 import React, { useContext, useRef, useState } from "react";
-import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Logo from '../../../public/img/Kidder.jpg';
-import { Menubar } from 'primereact/menubar';
 import 'primeicons/primeicons.css';
 import './Header.css';
 import { UserContext } from "../../main.jsx";
 import Cookies from 'js-cookie';
-import calendar from '../../../public/img/calendar.jpg'
-import HomePage from "../homePage/HomePage.jsx";
-import Calendar from "../calendar/Calendar.jsx";
+import { Menubar } from 'primereact/menubar';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { SlHome } from "react-icons/sl";
@@ -27,7 +24,7 @@ export default function Header() {
         {
             label: !user ? 'Login' : 'Home',
             command: () => navigate(!user ? '/login' : `/${user.status}/${user.username}`),
-            icon: !user ?'pi pi-user':<SlHome className="icon"/>
+            icon: !user ? 'pi pi-user' : <SlHome className="icon" />
         },
 
         {
@@ -37,16 +34,18 @@ export default function Header() {
         },
         {
             label: 'Calendar',
-            command: () => {navigate("/calendar"), window.scrollTo({
-                top: 0,
-                behavior: 'smooth' 
-            })},
+            command: () => {
+                navigate("/calendar"), window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                })
+            },
             icon: 'pi pi-calendar'
 
         },
         {
             label: 'Weekly Events',
-            command: () =>user? navigate("/events"):loginNavigate(),
+            command: () => user ? navigate("/events") : loginNavigate(),
             icon: 'pi pi-palette'
         },
         user != null && {
@@ -71,7 +70,6 @@ export default function Header() {
         }
     };
 
-
     const loginNavigate = () => {
         setDisplayDialog(true);
     };
@@ -79,6 +77,7 @@ export default function Header() {
     const onHide = () => {
         setDisplayDialog(false);
     };
+
     return (
         <>
             <nav>
@@ -110,24 +109,13 @@ export default function Header() {
                 </footer>
             </div>)}
             <div>
-         
-            <Dialog visible={displayDialog} onHide={onHide}>
-                <h2>Login Required</h2>
-                <p>You need to login to access this feature.</p>  
-                <Button label="OK" onClick={onHide} />
-            </Dialog>
-        </div>
+
+                <Dialog visible={displayDialog} onHide={onHide}>
+                    <h2>Login Required</h2>
+                    <p>You need to login to access this feature.</p>
+                    <Button label="OK" onClick={onHide} />
+                </Dialog>
+            </div>
         </>
     );
 }
-
-
-
-
-
-
-const MyComponent = () => {
-   
-
-  
-};

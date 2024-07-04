@@ -1,8 +1,5 @@
 import express from "express";
-import { ClassController } from "../Controller/classController.js";
-import { authMiddleWare } from "../MiddleWare/authMiddleWare.js";
-
-
+import { ClassController } from "../controller/classController.js";
 
 const classRouter = express.Router();
 const classController = new ClassController()

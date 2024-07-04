@@ -1,20 +1,9 @@
 import React, { useEffect, useState, useContext } from "react"
-import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate} from "react-router-dom";
-import Cookies from 'js-cookie';
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../main";
 import { getFetchRequest } from "../fetch";
 import { socket } from "../../socket";
 import './Teacher.css'
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { Image } from 'primereact/image';
-import { IoIosSearch } from "react-icons/io";
-import { FloatLabel } from "primereact/floatlabel";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Baby from "../baby/Baby";
 const URL = "http://localhost:8080"
 const imgUrl = '../../../public/img'
 import Autocomplete from '@mui/material/Autocomplete';
@@ -25,52 +14,38 @@ export default function Teacher() {
       const navigate = useNavigate();
       const [user, setUser] = useContext(UserContext)
       const [childrenList, setChildrenList] = useState([]);
-      const [room, setRoom] = useState('');
       const [publicRoom, setPublicRoom] = useState('');
-      const [baby, setBaby] = useState();
+      const [child, setchild] = useState();
       const location = useLocation()
-      const token = Cookies.get('token');
-      const [value, setValue] = useState('');
-      const isBabyRoute = location.pathname.includes("baby");
+      const ischildRoute = location.pathname.includes("child");
       const isChatAllRoute = location.pathname.includes("chatAll");
 
       useEffect(() => {
             if (user) {
-             try {
-              getFetchRequest(user, URL, 'child/teacher',  [user.id])
+                  try {
+                        getFetchRequest(URL, 'child/teacher', [user.id])
                               .then(data => {
                                     setChildrenList(data);
                               })
-                        getFetchRequest(user, URL, 'class/teacher',  [user.id])
+                        getFetchRequest(URL, 'class/teacher', [user.id])
                               .then(data => {
-                                    setPublicRoom(data[0].idNurseryclass)
+                                    setPublicRoom(data[0].idChildrenclass)
                               })
-                  } catch {
+                  }
+                  catch {
                         alert("error")
                   }
             }
       }, [])
 
-      // useEffect(() => {
-      //      baby&& navigate(`./baby/${baby.childName}`, { state: { addressee: baby.childId } });
-      //   }, [baby])
-
-      const joinPrivateRoom = (baby, room) => {
+      const joinPrivateRoom = (child, room) => {
             if (user.username !== '') {
                   let username = user.username;
                   socket.emit('join_room', { username, room });
             }
-             if(isBabyRoute||isChatAllRoute)
-            navigate(`../baby/${baby.childName}`, { state: { baby: baby } }) 
-      //        const baseUrl = window.location.origin + window.location.pathname;
-      //        baseUrl=baseUrl.replace(`baby`,`baby/${baby.childName}`);
-      //        console.log(baseUrl) // Get the base URL
-      //       history.push(baseUrl + '/new-segment'); // Clear the end and add a new segment
-      //       }
-      else{
-            //navigate(`./baby/${baby.childName}`, { state: { addressee: baby.childId } });
-            navigate(`./baby/${baby.childName}`, { state: { baby: baby } });
-      }
+            (ischildRoute || isChatAllRoute) ?
+                  navigate(`../child/${child.childName}`, { state: { child: child } }) :
+                  navigate(`./child/${child.childName}`, { state: { child: child } });
       };
 
       const joinPublicRoom = () => {
@@ -78,91 +53,50 @@ export default function Teacher() {
                   let username = user.username;
                   socket.emit('join_public_room', { username, publicRoom });
             }
-             if(isBabyRoute||isChatAllRoute)
-                  navigate(`../chatAll`, { state: { addressee: publicRoom, isPublicRoom:true } })
-            else
-                   navigate(`./chatAll`, { state: { addressee: publicRoom ,isPublicRoom:true} });
+            (ischildRoute || isChatAllRoute) ?
+                  navigate(`../chatAll`, { state: { addressee: publicRoom, isPublicRoom: true } }) :
+                  navigate(`./chatAll`, { state: { addressee: publicRoom, isPublicRoom: true } });
       };
-  
+
       const handleChange = (event, newValue) => {
-            let selectedBaby = childrenList.find(baby => baby.childName === newValue);
-            setValue(selectedBaby.childName);
-            setRoom(selectedBaby.childId);
-            setBaby(selectedBaby);
-            joinPrivateRoom(selectedBaby, selectedBaby.childId);
-            navigate(`./baby/${selectedBaby.childName}`, { state: { baby: selectedBaby } });
-        };
+            let selectedchild = childrenList.find(child => child.childName === newValue);
+            setchild(selectedchild);
+            joinPrivateRoom(selectedchild, selectedchild.childId);
+            navigate(`./child/${selectedchild.childName}`, { state: { child: selectedchild } });
+      };
 
       return (
             <>
                   <h1 className="teacher-name">Hi, {user.name}</h1>
                   <div className="children-container">
-                  <div className="autocomplete-container">
-                  <Autocomplete
-    disablePortal
-    id="combo-box-demo"
-    onChange={handleChange}
-    options={childrenList.map(child => child.childName)}
-    sx={{ width: 300 }}
-    renderInput={(params) => <TextField {...params} label="Search" />}/>
-
+                        <div className="autocomplete-container">
+                              <Autocomplete
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    onChange={handleChange}
+                                    options={childrenList.map(child => child.childName)}
+                                    sx={{ width: 300 }}
+                                    renderInput={(params) => <TextField {...params} label="Search" />} />
+                        </div>
+                        <div className="babies">
+                              {childrenList.map((child, index) => (
+                                    <div key={index} className={`child-row ${index % 2 === 0 ? 'white-bg' : 'red-bg'}`} onClick={() => {
+                                          joinPrivateRoom(child, child.childId);
+                                    }}>
+                                          <div className="image-circle">
+                                                <img src={`${imgUrl}/${child.childName}.png`} alt={child.childName} />
+                                          </div>
+                                          <span className="child-name">{child.childName}</span>
+                                    </div>
+                              ))}
+                              <div className="child-row" onClick={() => {
+                                    joinPublicRoom();
+                              }}>
+                                    <span className="allClass">All Class</span>
+                              </div>
+                        </div>
                   </div>
-                  <div className="babies">
-                  {childrenList.map((baby, index) => (
-                  <div key={index} className={`baby-row ${index % 2 === 0 ? 'white-bg' : 'red-bg'}`} onClick={() => {
-                  setRoom(baby.childId);
-                  joinPrivateRoom(baby, baby.childId);
-    }}>
-        <div className="image-circle">
-            <img src={`${imgUrl}/${baby.childName}.png`} alt={baby.childName} />
-        </div>
-        <span className="baby-name">{baby.childName}</span>
-    </div>
-))}
-    <div className="baby-row" onClick={() => {
-        setRoom(user.id);
-        joinPublicRoom();
-    }}>
-        <span className="allClass">All Class</span>
-    </div>
-</div>
- </div>
-           
-
-
-
-                  {/* <Button onClick={() => { setRoom(user.id); joinPublicRoom(); }} >Sending a message to all kindergarten children</Button> */}
                   <Outlet />
             </>
       );
 }
-///------------------------------------------
-      // return (
-      //       <>
-      //             <h1>Hi, {user.name}</h1>
-
-      //             <div className="image-wrapper">
-      //                   <Button onClick={() => { setRoom(user.id); joinPublicRoom(); }} >Sending a message to all kindergarten children</Button>
-      //                   <div> 
-      //                       {/* <Galeria childrenList={childrenList}/>
-      //                         <Galeria children={childrenList}/> */}
-      //                   </div>
-
-      //                   <div className="childrenList">
-      //                         {childrenList.length && childrenList.map((baby, key) => (
-      //                               <button key={key} onClick={() => {
-
-      //                                     setRoom(baby.childId);
-      //                                     joinPrivateRoom(baby, baby.childId);
-      //                               }}  >
-      //                                     <div className="image-circle">
-      //                                           <img src={`${imgUrl}/${baby.childName}.png `} alt={baby.childName} />
-      //                                     </div>
-      //                               </button>
-
-      //                         ))}
-      //                   </div>
-      //             </div>
-      //             <Outlet />
-      //       </>
-      // );

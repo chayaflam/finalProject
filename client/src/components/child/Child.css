@@ -1,4 +1,4 @@
-.baby{
+.child{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -20,7 +20,7 @@
     flex: 1;
 }
 
-.baby {
+.child {
     flex: 2;
     text-align: center;
 }

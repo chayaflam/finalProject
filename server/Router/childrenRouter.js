@@ -1,6 +1,5 @@
 import express from "express";
-import { ChildrenController } from "../Controller/childrenController.js";
-import { authMiddleWare } from "../MiddleWare/authMiddleWare.js";
+import { ChildrenController } from "../controller/childrenController.js";
 
 const childrenRouter = express.Router();
 const childrenController = new ChildrenController()
