@@ -1,0 +1,29 @@
+.chatDiv {
+    height: 400px;
+    width: 90%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+
+.centeredContainer {
+    width: 90%;
+    align-items: center;
+}
+
+
+/* .chatDiv {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+    height: 100%; 
+    position: relative;
+  }
+  
+  .centeredContainer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+  } */

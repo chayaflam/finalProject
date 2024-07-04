@@ -3,8 +3,7 @@ import { Server } from "socket.io";
 import { executeQuery } from "./Service/dataBase.js";
 import { postQuery, getByParamQuery, getTodayMessagesQuery } from "./Service/queries.js";
 
-
-const url = process.env.CLIENT_URL || 'http://localhost:5173'
+const url = process.env.CLIENT_URL 
 const httpServer = createServer();
 export const io = new Server(httpServer, {
     cors: {
@@ -13,12 +12,9 @@ export const io = new Server(httpServer, {
     }
 });
 
-//---------------------------------------------------------------------------------------------------------------------
-let chatRoom = '';
 let allUsers = [];
 let chatRoomUsers = [];
 let babyClass = [];
-//---------------------------------------------------------------------------------------------------------------------
 
 io.on("connection", (socket) => {
     let result

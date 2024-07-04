@@ -49,8 +49,8 @@ export default function Baby() {
                 data.map((day) => {
                     let totalNumber=day.total_number;
                     let date=day.day;
-                    yy.push(totalNumber)
-                    xx.push(date)
+                    !yy.includes(totalNumber)&&yy.push(totalNumber)
+                    !xx.includes(date)&& xx.push(date)
                 })
             })
               const  data = {
@@ -164,8 +164,8 @@ export default function Baby() {
                     </div>
                 </>}
             </div>
-            {!displayChart && <button onClick={() => setDisplayChat(true)}>chart</button>}
-            {displayChart && <button onClick={() => setDisplayChat(false)}>close</button>}
+            {!displayChart && <Button onClick={() => setDisplayChat(true)}>chart</Button>}
+            {displayChart && <Button onClick={() => setDisplayChat(false)}>close</Button>}
         </div>
     </>)
 };

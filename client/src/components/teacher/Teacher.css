@@ -93,15 +93,17 @@ button img {
 }
 
 .white-bg {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     width: 80%;
     border-radius: 10px;
+    border: 1px solid #e5e7eb;
 }
 
 .red-bg {
-    background-color: #59abf8; 
+    background-color: #59abf88a;
     width: 80%;
     border-radius: 10px;
+    border: 1px solid #e5e7eb;
 }
 .allClass{
    

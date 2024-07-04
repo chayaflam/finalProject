@@ -84,22 +84,14 @@ export default function Teacher() {
                    navigate(`./chatAll`, { state: { addressee: publicRoom ,isPublicRoom:true} });
       };
   
-      // const handleChange = (event) => {
-      //   let baby=event.target.value;         
-      //   setValue(baby.childName);
-      //   setRoom(baby.childId);
-      //   joinPrivateRoom(baby,baby.childId);
-
-      // };
-      const handleChange = (event) => {
-            let selectedBaby= childrenList.filter(baby=>baby==event)[0]
+      const handleChange = (event, newValue) => {
+            let selectedBaby = childrenList.find(baby => baby.childName === newValue);
             setValue(selectedBaby.childName);
             setRoom(selectedBaby.childId);
-            setBaby(selectedBaby); // Update the state with the selected baby
+            setBaby(selectedBaby);
             joinPrivateRoom(selectedBaby, selectedBaby.childId);
-      };
-  
- 
+            navigate(`./baby/${selectedBaby.childName}`, { state: { baby: selectedBaby } });
+        };
 
       return (
             <>
@@ -107,19 +99,19 @@ export default function Teacher() {
                   <div className="children-container">
                   <div className="autocomplete-container">
                   <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    onChange={(event, newValue) => handleChange(newValue)}
-                    options={childrenList.map(child => child.childName)}
-                    sx={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Search" />}
-                    />
+    disablePortal
+    id="combo-box-demo"
+    onChange={handleChange}
+    options={childrenList.map(child => child.childName)}
+    sx={{ width: 300 }}
+    renderInput={(params) => <TextField {...params} label="Search" />}/>
+
                   </div>
                   <div className="babies">
                   {childrenList.map((baby, index) => (
-    <div key={index} className={`baby-row ${index % 2 === 0 ? 'white-bg' : 'red-bg'}`} onClick={() => {
-        setRoom(baby.childId);
-        joinPrivateRoom(baby, baby.childId);
+                  <div key={index} className={`baby-row ${index % 2 === 0 ? 'white-bg' : 'red-bg'}`} onClick={() => {
+                  setRoom(baby.childId);
+                  joinPrivateRoom(baby, baby.childId);
     }}>
         <div className="image-circle">
             <img src={`${imgUrl}/${baby.childName}.png`} alt={baby.childName} />
