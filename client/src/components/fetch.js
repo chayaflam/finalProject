@@ -1,16 +1,15 @@
-async function getFetchRequest( URL, tablename, params) {
+async function getFetchRequest(URL, tablename, params) {
     try {
-   const result=  await fetch(`${URL}/${tablename}/${params[0]}`, {
+        const result = await fetch(`${URL}/${tablename}/${params[0]}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
                 'Origin': 'http://localhost:8080'
             }
         })
-        const response=await result.json();
+        const response = await result.json();
         return response;
     } catch (err) {
-        console.log("error🙂☺"+err)
         return err
     }
 }
@@ -28,11 +27,11 @@ async function postFetchRequest(URL, tablename, params, onReady, onError) {
             }
         })
         const response = await result.json();
-        console.log("response response" ,response)
+        console.log("response response", response)
         onReady(response);
     }
-    catch (err) { 
-        onError(err) 
+    catch (err) {
+        onError(err)
     }
 }
 

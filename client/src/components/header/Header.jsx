@@ -1,6 +1,9 @@
 import React, { useContext, useRef, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Logo from '../../../public/img/Kidder.jpg';
+import galeria1 from '../../../public/img/galeria1.jpg';
+import galeria2 from '../../../public/img/galeria2.jpg';
+
 import 'primeicons/primeicons.css';
 import './Header.css';
 import { UserContext } from "../../main.jsx";
@@ -99,7 +102,14 @@ export default function Header() {
             )}
 
             <Outlet />
+
             {!user && (<div ref={footerRef} className="card_footer">
+                <div className="galeria">
+                     <img className="galeria" src={galeria1}  />
+                     <img className="galeria" src={galeria2}  />
+                   
+
+                </div>
                 <footer className="footer">
                     <p className="grid-item">Phone Numbers Comments: 202-456-1111</p>
                     <p className="grid-item">Switchboard: 202-456-1414 FAX: 202-456-2461</p>

@@ -20,7 +20,8 @@ export default function Login() {
     const [visible, setVisible] = useState(true);
     const { register, handleSubmit } = useForm()
     const navigate = useNavigate();
-
+    const [displayDialog, setDisplayDialog] = useState(false);
+    let msg;
     useEffect(() => {
         if (user) {
             const cookies = Object.keys(Cookies.get());
@@ -41,8 +42,14 @@ export default function Login() {
             Cookies.set('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, name: dataFromServer.result.name }));
             localStorage.setItem('user', JSON.stringify({ username: data.username, id: dataFromServer.result.id, status: dataFromServer.result.statusUser, token: dataFromServer.token }))
             navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
-        }, (status) => alert("Error: " + status));
+        }, ()=> setDisplayDialog(true));
     }
+
+    
+
+    const onHide = () => {
+        setDisplayDialog(false);
+    };
 
     return (<>
         <div className="card flex justify-content-center">
@@ -74,6 +81,11 @@ export default function Login() {
                     </form>
                 )}
             ></Dialog>
+            <Dialog visible={displayDialog} onHide={onHide}>
+                <h2>Login failed</h2>
+                <p>user is not found</p>
+                <Button label="OK" onClick={onHide} />
+            </Dialog>
         </div>
     </>
     )

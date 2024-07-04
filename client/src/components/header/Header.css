@@ -1121,3 +1121,8 @@ img {
     width: 25px;
     height: auto;
 }
+.galeria{
+    width: 300px;
+    height: auto;
+    margin: 10px;
+}
