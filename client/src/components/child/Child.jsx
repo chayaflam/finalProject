@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ChatRoom from "../chatRoom/ChatRoom";
 import { useLocation, useParams } from "react-router-dom";
 import "./Child.css"
@@ -11,6 +11,8 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Teacher from "../teacher/Teacher";
 import { Chart } from 'primereact/chart';
+import { UserContext } from "../../main";
+import Parent from "../parent/Parent";
 const imgUrl = '../../../public/img'
 
 export default function child() {
@@ -29,10 +31,11 @@ export default function child() {
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
     const verticalAxis = [];
     const horizontalAxis = [];
+    const [user, setUser] = useContext(UserContext)
 
     useEffect(() => {
         feedingDataPerWeek()
-    }, []);
+    }, [childname]);
 
     async function feedingDataPerWeek() {
 
@@ -109,9 +112,10 @@ export default function child() {
 
     return (<>
         <div className="container">
-            <div className="teacher">
-                <Teacher />
-            </div>
+            {user.status == "teacher" &&
+                <div className="teacher">
+                    <Teacher />
+                </div> }
             <div className="child">
                 <ImageListItem >
                     <img className="imgListItem" src={`${imgUrl}/${childname}.png`} />
@@ -128,6 +132,7 @@ export default function child() {
                 <Sidebar visible={visibleRight} position="right" onHide={() => setVisibleRight(false)}>
                     <h2>{child.childName}</h2>
                     <h3>Class<br /></h3> <h4>{child.childrenClassId}</h4>
+
                     <h3>Address<br /></h3> <h4> {child.address}</h4>
                     <h3>FatherCell<br /> </h3> <h4>{child.fatherCell}</h4>
                     <h3>MotherCell<br /> </h3> <h4>{child.motherCell}</h4>
@@ -136,6 +141,9 @@ export default function child() {
                     <h3>Medical problem<br /></h3> <h4> {child.medicalProblem ? child.medicalProblem : "no"}</h4>
                     <h3>Marital status<br /></h3> <h4> {child.maritalStatus ? child.maritalStatus : "regular"}</h4>
                     <h3>Date of birth<br /> </h3> <h4>{displayDateOfBirth(child.dateOfBirth)}</h4>
+
+
+                    
                 </Sidebar>
                 {!displayChart && <ChatRoom addressee={childId} />}
                 {displayChart && <>

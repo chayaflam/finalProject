@@ -105,10 +105,9 @@ export default function Header() {
 
             {!user && (<div ref={footerRef} className="card_footer">
                 <div className="galeria">
-                     <img className="galeria" src={galeria1}  />
-                     <img className="galeria" src={galeria2}  />
+                     {/* <img className="galeria" src={galeria1}  /> */}
+                     {/* <img className="galeria" src={galeria2}  /> */}
                    
-
                 </div>
                 <footer className="footer">
                     <p className="grid-item">Phone Numbers Comments: 202-456-1111</p>

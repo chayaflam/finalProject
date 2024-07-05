@@ -65,13 +65,13 @@ export default function Login() {
                                 <label htmlFor="username" className="font-semibold labelText">
                                     Username
                                 </label>
-                                <InputText type="username" id="username" name="username" {...register("username")} label="Username" className=" border-none p-3 text-primary-50 inputText"></InputText>
+                                <InputText type="username" id="username" name="username" {...register("username")} label="Username" className=" border-none p-3 text-primary-900 inputText"></InputText>
                             </div>
                             <div className="inline-flex flex-column gap-2">
                                 <label htmlFor="username" className="labelText font-semibold">
                                     Password
                                 </label>
-                                <InputText type="password" name="password" id="password" {...register("userPassword")} label="Password" className="inputText border-none p-3 text-primary-50" ></InputText>
+                                <InputText type="password" name="password" id="password" {...register("userPassword")} label="Password" className="inputText border-none p-3 text-primary-900" ></InputText>
                             </div>
                             <div className="flex align-items-center gap-2">
                                 <Button type="submit" value="Submit" label="Submit" text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-write-alpha-10"></Button>

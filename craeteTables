@@ -196,3 +196,12 @@ ADD CONSTRAINT `child`
   ALTER TABLE `finalprojectdb`.`messages` 
 CHANGE COLUMN `childId` `childId` INT(11) NOT NULL ;
 INSERT INTO `finalprojectdb`.`childrenclass` (`teacherId`, `ageRange`, `idChildrenClass`) VALUES ('2', '3-6m', '2');
+
+ALTER TABLE `finalprojectdb`.`childrenclass` 
+ADD COLUMN `teacherCell` VARCHAR(45) NOT NULL AFTER `idChildrenClass`,
+ADD COLUMN `classCell` VARCHAR(45) NOT NULL AFTER `teacherCell`,
+ADD COLUMN `teacherName` VARCHAR(45) NOT NULL AFTER `classCell`,
+ADD COLUMN `classAddress` VARCHAR(45) NULL AFTER `teacherName`;
+
+
+UPDATE `finalprojectdb`.`childrenclass` SET `teacherCell` = '0534192312', `classCell` = '026423325', `teacherName` = 'Ruth Sorcher', `classAddress` = 'Lubavich 15' WHERE (`id` = '1');

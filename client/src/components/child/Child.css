@@ -19,6 +19,9 @@
 .teacher {
     flex: 1;
 }
+.parent {
+    flex: 1;
+}
 
 .child {
     flex: 2;

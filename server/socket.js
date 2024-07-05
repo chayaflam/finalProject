@@ -53,11 +53,14 @@ io.on("connection", (socket) => {
 
     socket.on('send_message', async (data) => {
         try {
-            const { username, room, message, createdtime } = data;
-            const newData = { senderName: username, message: message, date: createdtime }
+            const { username, room, msg, createdtime } = data;
+            console.log(Object.values(data))
+            const newData = { senderName: username, message: msg, date: createdtime }
+            console.log(Object.values(newData))
+
             io.in(room).emit('receive_message', { data: [newData], isJoin: false }); 
             const queryChildren = postQuery();
-            result = await executeQuery(queryChildren, [username, room, message, createdtime]);
+            result = await executeQuery(queryChildren, [username, room, msg, createdtime]);
         } catch (ex) {
             const err = {}
             err.statusCode = 500;

@@ -1,3 +1,105 @@
-body{
-    margin-top: 150px;
+img{
+    height: 80px;
+    width: 100%;
+}
+
+button{
+    height: 100%;
+    padding: 0;
+    justify-content: center;
+}
+
+button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    display: inline-block;
+}
+.logOut{
+    width: 300px;
+}
+
+
+button:hover {
+    transform: scale(1.1); /* Make the image slightly bigger on hover */
+}
+
+button img {
+    width: 100px;
+    height: auto;
+}
+.childrenList{
+    background: var(--surface-card);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+
+.children-container {
+   
+}
+
+.child-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust spacing between each child row */
+}
+
+.image-circle {
+    margin-right: 10px; /* Adjust spacing between image and name */
+}
+
+.child-name {
+    font-size: 16px;
+}
+.teacher-name {
+    text-align: center; /* Center the teacher name horizontally */
+    margin-top: 20px; /* Adjust top margin for spacing */
+}
+
+.autocomplete-container {
+    display: flex;
+    max-width: fit-content;
+    margin: 0 auto;
+}
+.babies {
+    display: flex;
+    flex-direction: column; /* Display babies in a column */
+    align-items: center; /* Center align the content horizontally */
+    justify-content: center; /* Center align the content vertically */
+    margin-top: 20vw;
+}
+
+
+.image-circle {
+    width: 100px; /* Increase the width and height to make the circle slightly bigger */
+    height: 100px;
+ 
+    overflow: hidden; /* Ensure image stays within the circle */
+}
+
+.image-circle img {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.white-bg {
+    background-color: #ffffff;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.red-bg {
+    background-color: #59abf88a;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.css-wb57ya-MuiFormControl-root-MuiTextField-root {
+    margin: 0 30px 0 30px;
+    width: 80%;
 }
