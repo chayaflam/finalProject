@@ -15,7 +15,6 @@ async function getFetchRequest(URL, tablename, params) {
 }
 
 async function postFetchRequest(URL, tablename, params, onReady, onError) {
-    console.log(params)
     try {
         const result = await fetch(`${URL}/${tablename}`, {
             method: 'POST',
@@ -27,7 +26,6 @@ async function postFetchRequest(URL, tablename, params, onReady, onError) {
             }
         })
         const response = await result.json();
-        console.log("response response", response)
         onReady(response);
     }
     catch (err) {

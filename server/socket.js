@@ -1,9 +1,9 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { executeQuery } from "./service/dataBase.js";
-import {getTodayMessagesQuery, postQuery } from './service/queries/messagesQuery.js'
+import { getTodayMessagesQuery, postQuery } from './service/queries/messagesQuery.js'
 import { getByParamQuery } from "./service/queries/genericQuery.js";
-const url = process.env.CLIENT_URL 
+const url = process.env.CLIENT_URL
 const httpServer = createServer();
 
 export const io = new Server(httpServer, {
@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
             const { username, room } = data;
             socket.join(room);
             const dataQuary = getTodayMessagesQuery();
-            result = await executeQuery(dataQuary, [room,room]);
+            result = await executeQuery(dataQuary, [room, room]);
             io.to(room).emit('receive_message', { data: result, isJoin: true })
         } catch (ex) {
             const err = {}
@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
 
     socket.on('join_public_room', async (data) => {
         try {
-            const { username, publicRoom } = data; 
+            const { username, publicRoom } = data;
             socket.join(publicRoom);
             const dataQuary = getTodayMessagesQuery();
             result = await executeQuery(dataQuary, [publicRoom]);
@@ -54,11 +54,8 @@ io.on("connection", (socket) => {
     socket.on('send_message', async (data) => {
         try {
             const { username, room, msg, createdtime } = data;
-            console.log(Object.values(data))
             const newData = { senderName: username, message: msg, date: createdtime }
-            console.log(Object.values(newData))
-
-            io.in(room).emit('receive_message', { data: [newData], isJoin: false }); 
+            io.in(room).emit('receive_message', { data: [newData], isJoin: false });
             const queryChildren = postQuery();
             result = await executeQuery(queryChildren, [username, room, msg, createdtime]);
         } catch (ex) {
@@ -70,15 +67,17 @@ io.on("connection", (socket) => {
 
     socket.on('send_message_to_class', async (data) => {
         try {
-            const { username, room, message, createdtime } = data;
-            const newData = { senderName: "all class", message: message, date: createdtime }
-            const classQuery = getByParamQuery('child', 'childrenClassId');          
+            const { username, room, msg, createdtime } = data;
+            const newData = { senderName: "all class", message: msg, date: createdtime }
+            const classQuery = getByParamQuery('child', 'childrenClassId');
+            childClass = await executeQuery(classQuery, [room]);
+           
             childClass.map(child => {
-                let room = child.childId
-                io.in(room).emit('receive_message', { data: [newData], isJoin: false });
+                let privateRooom = child.childId
+                io.to(privateRooom).emit('receive_message', { data: [newData], isJoin: false });
             })
             const queryChildren = postQuery();
-            result = await executeQuery(queryChildren, [username, room, message, createdtime]);
+            result = await executeQuery(queryChildren, [username, room, msg, createdtime]);
         } catch (ex) {
             const err = {}
             err.statusCode = 500;
@@ -87,8 +86,8 @@ io.on("connection", (socket) => {
     });
 });
 
-const port = process.env.PORT_SOCKET 
+const port = process.env.PORT_SOCKET
 httpServer.listen(port, (err) => {
     if (err) console.error(err);
-    console.log("Server listening on PORT",port);
+    console.log("Server listening on PORT", port);
 });

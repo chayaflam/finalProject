@@ -11,19 +11,21 @@ import Box from '@mui/material/Box'
 import { useParams } from "react-router-dom";
 
 const SendMessage = ({ socket, username, room, isPublicRoom }) => {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, setValue } = useForm();
   const [user, setUser] = useContext(UserContext)
   const [visible, setVisible] = useState(false);
   const [sliderValue, setSliderValue] = useState(30);
   let { childname } = useParams();
 
   const sendMessage = (data) => {
-    let msg=data.message
+    let msg = data.message
     if (msg !== '') {
       const createdtime = new Date().toISOString().slice(0, 19).replace('T', ' ')
       isPublicRoom ? socket.emit('send_message_to_class', { username, room, msg, createdtime }) :
-        socket.emit('send_message', { username, room,msg, createdtime });
+        socket.emit('send_message', { username, room, msg, createdtime });
+      setValue('message', '');
     }
+
   };
 
   const footerContent = (
@@ -33,7 +35,7 @@ const SendMessage = ({ socket, username, room, isPublicRoom }) => {
         icon="pi pi-send"
         onClick={() => {
           setVisible(false);
-          sendMessage(`food-${sliderValue}cc`)
+          sendMessage({ message:`food-${sliderValue}cc`})
         }}
         className="p-button-text"
       />
@@ -58,14 +60,12 @@ const SendMessage = ({ socket, username, room, isPublicRoom }) => {
             </Box>
             {footerContent}
           </Dialog>
-          <button className="imageButtom sleep" onClick={() => sendMessage({message:"sleep"})}></button>
-          <button className="imageButtom diaper" onClick={() => sendMessage({message:"daiper"})}></button>
-          <button className="imageButtom food" onClick={() => setVisible(true)}></button>   </div>}
+          <button className="imageButtom sleep" onClick={() => sendMessage({ message: "sleep" })}></button>
+          <button className="imageButtom diaper" onClick={() => sendMessage({ message: "daiper" })}></button>
+          <button className="imageButtom food" onClick={() => setVisible(true)}></button></div>}
         <form onSubmit={handleSubmit(sendMessage)}>
           <InputText type="text" name="message" id="message" {...register("message")} />
-          <button className='btn btn-primary' type='submit'>
-            Send Message
-          </button>
+          <button className='imageButtom send' type='submit' />
         </form>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import ChatRoom from "../chatRoom/ChatRoom";
 import { useLocation, useParams } from "react-router-dom";
 import "./Child.css"
@@ -24,81 +24,40 @@ export default function child() {
     const [visibleRight, setVisibleRight] = useState(false);
     const [displayChart, setDisplayChat] = useState(false);
     const [chartData, setChartData] = useState({});
+    const [classData, setClassData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-    const verticalAxis = [];
-    const horizontalAxis = [];
+    const verticalAxisRef = useRef([]);
+    const horizontalAxisRef = useRef([]);
+    const isMounted = useRef(false);
     const [user, setUser] = useContext(UserContext)
 
+
     useEffect(() => {
-        feedingDataPerWeek()
+        if (user) {
+            try {
+                getFetchRequest(URL, "class", [child.childrenClassId])
+                    .then(data => setClassData(data))
+            }
+            catch {
+                alert("error")
+            }
+        }
+    }, []);
+
+
+    useEffect(() => {
+        if (!isMounted.current) {
+            isMounted.current = true;
+            feedingDataPerWeek();
+        }
     }, [childname]);
 
-    async function feedingDataPerWeek() {
-
-        await getFetchRequest(URL, "messages", [childId])
-            .then(data => {
-                data.map((day) => {
-                    let totalNumber = day.total_number;
-                    let date = day.day;
-                    !verticalAxis.includes(totalNumber) && verticalAxis.push(totalNumber)
-                    !horizontalAxis.includes(date) && horizontalAxis.push(date)
-                })
-            })
-        const data = {
-            labels: horizontalAxis,
-            datasets: [
-                {
-                    label: 'cc',
-                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-                    borderColor: documentStyle.getPropertyValue('--blue-500'),
-                    data: verticalAxis
-                }
-            ]
-        };
-        console.log(data)
-
-        const options = {
-            maintainAspectRatio: false,
-            aspectRatio: 0.8,
-            plugins: {
-                legend: {
-                    labels: {
-                        fontColor: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary,
-                        font: {
-                            weight: 500
-                        }
-                    },
-                    grid: {
-                        display: false,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                }
-            }
-        };
-        setChartData(data);
-        setChartOptions(options);
-    }
-    const displayDateOfBirth = (date) => {
+   
+    const displayDate = (date) => {
         var data = new Date(date),
             month = '' + (data.getMonth() + 1),
             day = '' + data.getDate(),
@@ -110,12 +69,72 @@ export default function child() {
         return [year, month, day].join('-');
     }
 
+    async function feedingDataPerWeek() {
+        const fetchedData = await getFetchRequest(URL, "messages", [childId]);
+        if (fetchedData) {
+            fetchedData.forEach((day) => {
+                let totalNumber = day.total_number;
+                let date = day.day;
+                if (verticalAxisRef.current && horizontalAxisRef.current) {
+                    verticalAxisRef.current = [...verticalAxisRef.current, totalNumber];
+                    horizontalAxisRef.current = [...horizontalAxisRef.current, displayDate(date)];
+                }
+            });
+            const data = {
+                labels: horizontalAxisRef.current,
+                datasets: [
+                    {
+                        label: 'cc',
+                        backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                        borderColor: documentStyle.getPropertyValue('--blue-500'),
+                        data: verticalAxisRef.current
+                    }
+                ]
+            };
+            const options = {
+                maintainAspectRatio: false,
+                aspectRatio: 0.8,
+                plugins: {
+                    legend: {
+                        labels: {
+                            fontColor: textColor
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: textColorSecondary,
+                            font: {
+                                weight: 500
+                            }
+                        },
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: textColorSecondary
+                        },
+                        grid: {
+                            color: surfaceBorder,
+                            drawBorder: false
+                        }
+                    }
+                }
+            };
+            setChartData(data);
+            setChartOptions(options);
+        }
+    }
     return (<>
         <div className="container">
             {user.status == "teacher" &&
                 <div className="teacher">
                     <Teacher />
-                </div> }
+                </div>}
             <div className="child">
                 <ImageListItem >
                     <img className="imgListItem" src={`${imgUrl}/${childname}.png`} />
@@ -140,10 +159,10 @@ export default function child() {
                     <h3>Allergies<br /></h3> <h4> {child.allergies ? child.allergies : "no"}</h4>
                     <h3>Medical problem<br /></h3> <h4> {child.medicalProblem ? child.medicalProblem : "no"}</h4>
                     <h3>Marital status<br /></h3> <h4> {child.maritalStatus ? child.maritalStatus : "regular"}</h4>
-                    <h3>Date of birth<br /> </h3> <h4>{displayDateOfBirth(child.dateOfBirth)}</h4>
+                    <h3>Date of birth<br /> </h3> <h4>{displayDate(child.dateOfBirth)}</h4>
 
 
-                    
+
                 </Sidebar>
                 {!displayChart && <ChatRoom addressee={childId} />}
                 {displayChart && <>

@@ -4,15 +4,23 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center
+    justify-content: center;
+    scroll-padding-block: 100vh; 
+  
 }
 
 .centeredContainer {
     width: 90%;
     align-items: center;
+    scroll-padding-block: 100vh; 
 }
 
-
+.chatMessages {
+  height: 300px; /* Set a fixed height for the chatMessages div */
+  overflow-y: auto; /* Enable vertical scrolling */
+  display: flex;
+  flex-direction: column-reverse; /* Reverse the order of the messages */
+}
 /* .chatDiv {
     display: flex;
     flex-direction: column;

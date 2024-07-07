@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-
+import './ChatMessage.css'
 function ChatMessage({ socket, username, room }) {
 
   const [messagesRecieved, setMessagesReceived] = useState([]);
@@ -34,10 +34,10 @@ function ChatMessage({ socket, username, room }) {
   return (
     <div >
       {messagesRecieved.map((msg, i) => (
-        <div key={i}>
+        <div key={i} className={`${msg.senderName==username  ? 'user-msg' : 'sender-msg'}`}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span >{msg.senderName}</span>
-            <span >
+            <span className='sendername'>{msg.senderName}</span>
+            <span className='createData'>
               {formatDateFromTimestamp(msg.createdtime)}
             </span>
           </div>

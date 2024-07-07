@@ -29,7 +29,7 @@ export default function Teacher() {
                               })
                         getFetchRequest(URL, 'class/teacher', [user.id])
                               .then(data => {
-                                    setPublicRoom(data[0].idChildrenclass)
+                                    setPublicRoom(data[0].idChildrenClass)
                               })
                   }
                   catch {
@@ -64,6 +64,7 @@ export default function Teacher() {
             joinPrivateRoom(selectedchild, selectedchild.childId);
             navigate(`./child/${selectedchild.childName}`, { state: { child: selectedchild } });
       };
+
 
       return (
             <>

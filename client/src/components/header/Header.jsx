@@ -22,7 +22,6 @@ export default function Header() {
     const [displayDialog, setDisplayDialog] = useState(false);
 
     const isCalendarRoute = location.pathname === '/calendar';
-    user && console.log(user)
     const items = [
         {
             label: !user ? 'Login' : 'Home',

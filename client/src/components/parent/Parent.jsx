@@ -24,8 +24,7 @@ export default function Parent() {
                   try {
                         getFetchRequest(URL, 'child/parent', [user.id])
                               .then(data => setChild(data))
-                        //      . then(dataOfChild=>
-                        //             getFetchRequest(URL, 'child', dataOfChild.childrenClassId))
+
                   }
                   catch {
                         alert("error")
@@ -44,7 +43,8 @@ export default function Parent() {
 
       return (
             <>  <h1 className="teacher-name">hi {user.name}</h1>
-                  <div className="children-container ">
+                  <Outlet />
+                 {!ischildRoute&& <div className="children-container ">
                         <div className="babies">
                               {child.length && child.map((child, index) => {
                                     return <div key={index} className={`child-row ${index % 2 === 0 ? 'white-bg' : 'red-bg'}`} onClick={() => {
@@ -57,8 +57,7 @@ export default function Parent() {
                                     </div>
                               })}
                         </div>
-                  </div>
-                  <Outlet />
+                  </div>}
             </>
       )
 }

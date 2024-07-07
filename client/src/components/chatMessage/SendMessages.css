@@ -22,6 +22,10 @@
     background-image: url(/public/img/diaper.png);
 
 }
+.send{
+    background-image: url(/public/img/send.png);
+    background-size: cover;
+}
 
 .sendMessage {
     background-color: white;
@@ -42,4 +46,7 @@
 
 .css-70qvj9 {
     margin: 20px;
+}
+.p-inputtext{
+    margin-bottom: 20px;
 }

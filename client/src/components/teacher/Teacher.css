@@ -68,7 +68,7 @@ button img {
     flex-direction: column; /* Display babies in a column */
     align-items: center; /* Center align the content horizontally */
     justify-content: center; /* Center align the content vertically */
-    margin-top: 20px; /* Adjust top margin for spacing */
+    margin-top: 70px; /* Adjust top margin for spacing */
 }
 .child-row {
    
