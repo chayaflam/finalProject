@@ -1,10 +1,10 @@
 import React from "react";
-import pdfFile from '../../../public/pdf/izika5.pdf'
+import pdfFile from '../../../public/pdf/calender.pdf'
 import "./Calendar.css"
 
 export default function Calendar() {
        return (<>
-        <div>
+        <div className="pdf">
         <iframe src={pdfFile}  /> 
         </div>
     </>)

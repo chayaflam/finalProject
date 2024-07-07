@@ -42,23 +42,24 @@ export default function Parent() {
       };
 
       return (
-            <>  <h1 className="teacher-name">hi {user.name}</h1>
-                  <Outlet />
-                 {!ischildRoute&& <div className="children-container ">
+            <>
+                <h1 className="teacher-name">hi {user.name}</h1>
+                <Outlet />
+                {!ischildRoute && 
+                    <div className="children-container">
                         <div className="babies">
-                              {child.length && child.map((child, index) => {
-                                    return <div key={index} className={`child-row ${index % 2 === 0 ? 'white-bg' : 'red-bg'}`} onClick={() => {
-                                          joinRoom(child, child.childId);
-                                    }}  >
-                                          <div className="image-circle">
-                                                <img src={`${imgUrl}/${child.childName}.png`} alt={child.childName} />
-                                          </div>
-                                          <span className="child-name">{child.childName}</span>
+                            {child.length && child.map((child, index) => (
+                                <div key={index} className={`child-row ${index % 2 === 0 ? 'white-bg' : 'red-bg'}`} onClick={() => joinRoom(child, child.childId)} >
+                                    <div className="image-circle">
+                                        <img src={`${imgUrl}/${child.childName}.png`} alt={child.childName} />
                                     </div>
-                              })}
+                                    <span className="child-name">{child.childName}</span>
+                                </div>
+                            ))}
                         </div>
-                  </div>}
+                    </div>
+                }
             </>
-      )
+        );
 }
 

@@ -7,6 +7,7 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
 import Slider from '@mui/material/Slider';
+import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box'
 import { useParams } from "react-router-dom";
 
@@ -35,7 +36,7 @@ const SendMessage = ({ socket, username, room, isPublicRoom }) => {
         icon="pi pi-send"
         onClick={() => {
           setVisible(false);
-          sendMessage({ message:`food-${sliderValue}cc`})
+          sendMessage({ message: `food-${sliderValue}cc` })
         }}
         className="p-button-text"
       />
@@ -60,15 +61,24 @@ const SendMessage = ({ socket, username, room, isPublicRoom }) => {
             </Box>
             {footerContent}
           </Dialog>
-          <button className="imageButtom sleep" onClick={() => sendMessage({ message: "sleep" })}></button>
-          <button className="imageButtom diaper" onClick={() => sendMessage({ message: "daiper" })}></button>
-          <button className="imageButtom food" onClick={() => setVisible(true)}></button></div>}
+          <Tooltip title="sleep">
+            <button className="imageButtom sleep" onClick={() => sendMessage({ message: "sleep" })}></button>
+          </Tooltip>
+          <Tooltip title="diaper">
+            <button className="imageButtom diaper" onClick={() => sendMessage({ message: "daiper" })}></button>
+          </Tooltip>
+          <Tooltip title="food">
+            <button className="imageButtom food" onClick={() => setVisible(true)}></button>
+          </Tooltip>
+        </div>}
+
         <form onSubmit={handleSubmit(sendMessage)}>
+
           <InputText type="text" name="message" id="message" {...register("message")} />
           <button className='imageButtom send' type='submit' />
         </form>
       </div>
-    </div>
+    </div >
   );
 };
 

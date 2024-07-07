@@ -20,7 +20,7 @@ export default function Header() {
     const footerRef = useRef(null);
     const location = useLocation();
     const [displayDialog, setDisplayDialog] = useState(false);
-
+    const [displayFooter, setDisplayFooter] = useState(false)
     const isCalendarRoute = location.pathname === '/calendar';
     const items = [
         {
@@ -31,7 +31,7 @@ export default function Header() {
 
         {
             label: 'About us',
-            command: () => scrollToFooter(),
+            command: () => { scrollToFooter(), displayFooter ? setDisplayFooter(false) : setDisplayFooter(true) },
             icon: 'pi pi-search',
         },
         {
@@ -102,12 +102,7 @@ export default function Header() {
 
             <Outlet />
 
-            {!user && (<div ref={footerRef} className="card_footer">
-                <div className="galeria">
-                     {/* <img className="galeria" src={galeria1}  /> */}
-                     {/* <img className="galeria" src={galeria2}  /> */}
-                   
-                </div>
+            {displayFooter && <div ref={footerRef} className="card_footer">
                 <footer className="footer">
                     <p className="grid-item">Phone Numbers Comments: 202-456-1111</p>
                     <p className="grid-item">Switchboard: 202-456-1414 FAX: 202-456-2461</p>
@@ -115,7 +110,7 @@ export default function Header() {
                     <p className="grid-item">Office: 202-456-2121</p>
                     <p className="grid-item">Email: kidder@org.co.uk</p>
                 </footer>
-            </div>)}
+            </div>}
             <div>
 
                 <Dialog visible={displayDialog} onHide={onHide}>
