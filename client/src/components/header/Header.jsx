@@ -1,9 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Logo from '../../../public/img/Kidder.jpg';
-import galeria1 from '../../../public/img/galeria1.jpg';
-import galeria2 from '../../../public/img/galeria2.jpg';
-
 import 'primeicons/primeicons.css';
 import './Header.css';
 import { UserContext } from "../../main.jsx";

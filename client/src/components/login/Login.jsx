@@ -21,7 +21,6 @@ export default function Login() {
     const { register, handleSubmit } = useForm()
     const navigate = useNavigate();
     const [displayDialog, setDisplayDialog] = useState(false);
-    let msg;
     useEffect(() => {
         if (user) {
             const cookies = Object.keys(Cookies.get());
@@ -44,8 +43,6 @@ export default function Login() {
             navigate(`/${dataFromServer.result.statusUser}/${data.username}`);
         }, ()=> setDisplayDialog(true));
     }
-
-    
 
     const onHide = () => {
         setDisplayDialog(false);
